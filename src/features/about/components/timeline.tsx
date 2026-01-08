@@ -7,19 +7,19 @@ import { motion } from "motion/react";
 const timelineData = [
   { 
     year: 2023, 
-    content: "Lorem ipsu" 
+    content: "Formerly known as Masked Emotions. It began quietly as a capstone project built by a team of three during the Kodego Web Development Bootcamp. It meant to give people a place to speak without being seen." 
   },
   { 
     year: 2024, 
-    content: "Company founded with a vision to innovate and transform the industry through cutting-edge technology and dedicated research." 
+    content: "The site floated in the void of the internet, technically alive but mostly unheard. Only 58 messages ever passed through. Proof that someone, somewhere, still needed it." 
   },
   { 
     year: 2025, 
-    content: "Company founded with a vision to innovate and transform the industry through cutting-edge technology and dedicated research." 
+    content: "Development of version 2 began — We rebuilt everything from the ground up. Astryss was born." 
   },
   { 
     year: 2026, 
-    content: "Company founded with a vision to innovate and transform the industry through cutting-edge technology and dedicated research." 
+    content: "Astryss goes live. Not as a product, but as a place where unspoken things are finally allowed to glow." 
   },
 ]
 
@@ -27,7 +27,7 @@ export default function Timeline() {
   const [selectedYearIndex, setSelectedYearIndex] = useState(2);
 
   return (
-    <section className="md:h-screen md:flex gap-20 mt-4">
+    <section className="main-container md:h-screen md:flex gap-20 mt-4">
       <div className="w-full md:w-1/2 md:h-240 md:py-16 py-8 text-2xl md:text-[12.5rem] font-year font-black flex md:flex-col justify-between items-start leading-none">
         {timelineData.map((item, index) => {
           const isSelected = index === selectedYearIndex;

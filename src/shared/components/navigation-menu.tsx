@@ -15,6 +15,7 @@ import { Button } from "@/vendor/ui/button";
 
 import { Menu,Github, X } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -62,19 +63,14 @@ export default function Header() {
       <header 
         className={`px-4 w-full py-4 fixed top-0 flex justify-between md:justify-center items-center gap-6 z-60 transition-all duration-500 ease-in-out ${hasScrolled ? "shadow-sm bg-background" : "shadow-none"}`}
       >
+        <Image src="/assets/brand-logo-outlined.png" alt="Logo" width={100} height={100} className="hidden md:block h-16 w-auto relative"/>
+        
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
                 <Link href="/">
                   Home
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                <Link href="/about">
-                  About
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -94,9 +90,9 @@ export default function Header() {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem className="hidden">
+            <NavigationMenuItem>
               <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                <Link href="/">
+                <Link href="/time-capsule">
                   Time Capsule
                 </Link>
               </NavigationMenuLink>
@@ -144,9 +140,6 @@ export default function Header() {
           <ul className="text-2xl space-y-4">
             <li>
               <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/about">About</Link>
             </li>
             <li>
               <Link href="/faqs">FAQ's</Link>

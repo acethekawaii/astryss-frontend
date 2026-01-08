@@ -137,8 +137,7 @@ export default async function EntryPage(props: Props) {
 
         <div className="mt-6">
           <h2 className="text-xl">
-            Emotion: 
-            <span className="opacity-75 capitalize"> {entry.emotion}</span>
+            Emotion: <span className="opacity-75 capitalize">{entry.emotion}</span>
           </h2>
         </div>
       </div>

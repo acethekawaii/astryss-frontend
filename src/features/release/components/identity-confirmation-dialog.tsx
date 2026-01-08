@@ -9,7 +9,6 @@ import {
   DialogDescription,
 } from "@/vendor/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/vendor/ui/form";
-import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem } from "@/vendor/ui/select";
 import { Button } from "@/vendor/ui/button";
 import { Input } from "@/vendor/ui/input";
 
@@ -19,13 +18,20 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import AvatarPreview from "./avatar-preview";
 import { CreateEntryInput, createEntrySchema } from "@/features/entries/schema/entry.schema";
 import { useCreateEntry } from "@/features/entries/hooks/use-entries";
-import { EMOTIONS } from "@/shared/constants/emotions";
+import { Flame, Frown, Heart, Sparkles } from "lucide-react";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   content: string;
 };
+
+const EMOTIONS = [
+  { value: "inlove", icon: Heart, color: "text-pink-400" },
+  { value: "sad", icon: Frown, color: "text-blue-400" },
+  { value: "angry", icon: Flame, color: "text-red-400" },
+  { value: "other", icon: Sparkles, color: "text-zinc-400" },
+] as const;
 
 export default function IdentityConfirmationModal({ isOpen, setIsOpen, content }: Props) {
   const [avatarPreview, setAvatarPreview] = useState<File | null>(null);
@@ -123,38 +129,6 @@ export default function IdentityConfirmationModal({ isOpen, setIsOpen, content }
 
               <FormField
                 control={form.control}
-                name="emotion"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="px-1">Emotion</FormLabel>
-                    <FormControl>
-                      <Select value={field.value} onValueChange={field.onChange}>
-                        <SelectTrigger className="bg-white">
-                          <span>
-                            {field.value.charAt(0).toUpperCase() + field.value.slice(1)}
-                          </span>
-                        </SelectTrigger>
-                        <SelectContent className="bg-white">
-                          <SelectGroup>
-                            {EMOTIONS.map((emotion) => (
-                              <SelectItem key={emotion} value={emotion}>
-                                {emotion.charAt(0).toUpperCase() + emotion.slice(1)}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-
-                    <p className="text-xs px-1 opacity-75">
-                      Your emotion choice helps improve the experience for everyone.
-                    </p>
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
                 name="avatar"
                 render={({ field: { onChange, value, ...field } }) => (
                   <FormItem>
@@ -180,6 +154,35 @@ export default function IdentityConfirmationModal({ isOpen, setIsOpen, content }
                         src={URL.createObjectURL(avatarPreview)} 
                       />
                     )}
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="emotion"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="px-1 flex gap-8">
+                      {EMOTIONS.map((emotion) => {
+                        const isActive = field.value === emotion.value;
+                        return(   
+                          <button
+                            key={emotion.value}
+                            type="button"
+                            aria-pressed={isActive}
+                            onClick={() => field.onChange(emotion.value)}
+                            className={`text-sm flex gap-1 flex-col items-center capitalize cursor-pointer ${isActive ? `${emotion.color}` : 'opacity-50'}`}
+                          >
+                            <emotion.icon className='h-8 w-8' />
+                            {emotion.value}
+                          </button>
+                        )
+                      })}
+                    </div>
+                    <p className="text-xs px-1 opacity-75 mt-1">
+                      Pick the emotion that best matches this message.
+                    </p>
                   </FormItem>
                 )}
               />

@@ -2,7 +2,7 @@ import "./star-field.css";
 import * as motion from "motion/react-client";
 
 export default function StarField() {
-  const stars = Array.from({ length: 140 });
+  const stars = Array.from({ length: 200 });
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">

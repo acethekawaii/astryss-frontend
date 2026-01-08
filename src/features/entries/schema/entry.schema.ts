@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const MAX_FILE_SIZE = 2 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/png", "image/jpeg", "image/jpg"];
 
 export const createEntrySchema = z.object({
@@ -11,10 +11,16 @@ export const createEntrySchema = z.object({
   emotion: z.enum(["sad", "angry", "inlove", "other"]),
   variants: z.array(z.enum(["legacy", "dev", "beta"])).optional(),
   avatar: z
-    .instanceof(FileList)
+    .any()
     .optional()
-    .refine(files => !files || files.length <= 1, "Only one file allowed")
-    .refine(files => !files || files[0]?.size <= MAX_FILE_SIZE, "Max 2MB")
+    .refine(
+      files => !files || files.length === 1,
+      "Only one file allowed"
+    )
+    .refine(
+      files => !files || files[0]?.size <= MAX_FILE_SIZE,
+      "Max 2MB"
+    )
     .refine(
       files => !files || ACCEPTED_IMAGE_TYPES.includes(files[0]?.type),
       "Invalid file type"

@@ -11,6 +11,7 @@ import { Emotion, EMOTIONS } from "@/shared/constants/emotions";
 import { EntriesResponse, Entry } from "@/features/entries/types/entry.types";
 import { useEntries } from "@/features/entries/hooks/use-entries";
 import ReleaseMessagesCard from "./release-messages-card";
+import neonCat from "@/assets/gifs/neon-cat.gif";
 
 export default function ReleaseMessages({ initialEntries }: { initialEntries: EntriesResponse }) {
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | undefined>();
@@ -65,7 +66,7 @@ export default function ReleaseMessages({ initialEntries }: { initialEntries: En
           <Image 
             width={320} 
             height={180} 
-            src="/assets/gifs/neon-cat.gif" 
+            src={neonCat}
             alt="Neon Cat" 
             className="h-40 rounded-base shadow-lg shadow-monochromatic-dark" 
           />
