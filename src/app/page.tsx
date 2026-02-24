@@ -1,17 +1,16 @@
 import { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
 
-import StarField from "@/features/home/components/star-field";
-
-import { ArrowRight, Sparkle, Star } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import * as motion from "motion/react-client";
 import { Card, CardContent } from "@/vendor/ui/card";
-import Link from "next/link";
 import { Button } from "@/vendor/ui/button";
-import Image from "next/image";
-import Timeline from "@/features/about/components/timeline";
 
+import Timeline from "@/app/components/timeline";
 import Astronaut from "@/assets/astronaut.png";
 import AboutHero from "@/assets/about-hero-bg.png";
+import RandomLetterSwapForward from "@/vendor/fancy/text/random-letter-swap-forward-anim";
 
 export const metadata: Metadata = {
   title: "Home - astryss*",
@@ -22,29 +21,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main>
-      <section className="bg-linear-to-b from-[#0c0a1a] via-[#09040e] to-[#050208]">
-        <StarField />
-
-        <div className="main-container h-screen flex flex-col items-center justify-center gap-8">
-          <motion.div
-            initial={{ opacity: 0}}
-            animate={{ opacity: 1}}
-            transition={{ delay: 2, duration: 0.75, ease: "easeOut" }} 
-          >
-            <Sparkle className="h-5 w-5 text-[#f6dbbc] fill-current animate-pulse"/>
-          </motion.div>
-          <motion.p
-            initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ delay: .5, duration: 1.4, ease: "easeOut" }}
-            className="md:w-2/3 leading-relaxed md:text-3xl text-white text-center text-xl"
-          >
-            Newton's third law: to move forward you have to leave something behind.
-          </motion.p>
-        </div>
-      </section>
-
-      <section className="main-container mt-12 md:mt-24">
+      <section className="main-container mt-24 md:mt-32">
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -65,7 +42,7 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.30, ease: "easeOut" }}
             >
-              astryss*
+              <RandomLetterSwapForward label="astryss*" reverse={true} className="" />
             </motion.h1>
 
             <motion.div

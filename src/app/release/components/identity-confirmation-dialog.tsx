@@ -16,8 +16,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import AvatarPreview from "./avatar-preview";
-import { CreateEntryInput, createEntrySchema } from "@/features/entries/schema/entry.schema";
-import { useCreateEntry } from "@/features/entries/hooks/use-entries";
+import { CreateEntryInput, createEntrySchema } from "@/app/entries/schema/entry.schema";
+import { useCreateEntry } from "@/app/entries/hooks/use-entries";
 import { Flame, Frown, Heart, Sparkles } from "lucide-react";
 
 type Props = {
@@ -27,10 +27,10 @@ type Props = {
 };
 
 const EMOTIONS = [
-  { value: "inlove", icon: Heart, color: "text-pink-400" },
-  { value: "sad", icon: Frown, color: "text-blue-400" },
-  { value: "angry", icon: Flame, color: "text-red-400" },
-  { value: "other", icon: Sparkles, color: "text-zinc-400" },
+  { value: "inlove", icon: Heart, color: "text-pink-600" },
+  { value: "sad", icon: Frown, color: "text-blue-600" },
+  { value: "angry", icon: Flame, color: "text-red-600" },
+  { value: "other", icon: Sparkles, color: "text-zinc-600" },
 ] as const;
 
 export default function IdentityConfirmationModal({ isOpen, setIsOpen, content }: Props) {

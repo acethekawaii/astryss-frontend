@@ -4,12 +4,12 @@ import * as motion from "motion/react-client";
 
 import { Card } from "@/vendor/ui/card";
 
-import ReleaseMessages from "../../features/entries/components/release-messages";
-import { getEntries } from "@/features/entries/api/entries.api";
+import ReleaseMessages from "./components/release-messages";
+import { getEntries } from "@/app/entries/api/entries.api";
 
 export const metadata: Metadata = {
   title: "Entries - astryss*",
-  description: "B rowse all public entries created accross the platform.",
+  description: "Browse all public entries created accross the platform.",
   keywords: ["astryss", "freedom wall entries", "astryss entries", "public confessions", "anonymous pinoy confession", "write anonymously online"]
 };
 

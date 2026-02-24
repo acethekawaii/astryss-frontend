@@ -1,7 +1,7 @@
 "use client";
-import { useEntries } from "@/features/entries/hooks/use-entries";
+import { useEntries } from "@/app/entries/hooks/use-entries";
 import ReleaseSampleCard from "./release-sample-card";
-import { EntriesResponse, Entry } from "@/features/entries/types/entry.types";
+import { EntriesResponse, Entry } from "@/app/entries/types/entry.types";
 
 export default function ReleaseSample({ initialEntries }: { initialEntries: EntriesResponse }) {
   const { data, isFetchingNextPage, error } = useEntries({ limit: 6, type: 'release', initialData: initialEntries });

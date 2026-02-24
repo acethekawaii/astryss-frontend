@@ -4,10 +4,10 @@ import './release.css';
 import { Sparkle } from "lucide-react";
 import * as motion from "motion/react-client";
 
-import TypewriterText from "@/shared/components/typewriter-text";
-import { getEntries } from '@/features/entries/api/entries.api';
-import ReleaseSample from '@/features/release/components/release-samples';
-import WordCounterBox from '@/features/release/components/word-counter-box';
+import { getEntries } from '@/app/entries/api/entries.api';
+import ReleaseSample from '@/app/release/components/release-samples';
+import WordCounterBox from '@/app/release/components/word-counter-box';
+import Typewriter from '@/vendor/fancy/text/typewriter';
 
 export const metadata: Metadata = {
   title: 'Release - astryss*',
@@ -37,12 +37,20 @@ export default async function ReleasePage() {
       >
         <h1 className="text-6xl text-accent font-bold">astryss*</h1>
 
-        <div className="flex bg-accent px-6 py-4 rotate-2 mt-6 text-secondary-background">
-          <div>
+        <div className="bg-accent px-6 py-4 rotate-2 mt-6 text-secondary-background">
+          <span>
             Send your feelings to the stars — a place for your thoughts to&nbsp;
-            <span className='md:hidden text-main'>live</span>
-          </div>
-          <span className='hidden'><TypewriterText /></span>
+          </span>
+          <span className=''>
+            <Typewriter
+              text={["shine", "live", "stay", "glow", "sparkle", "radiate", "twinkle"]}
+              speed={70}
+              className="text-yellow-500"
+              waitTime={1500}
+              deleteSpeed={40}
+              cursorChar={"_"}
+            />
+          </span>
         </div>
 
         <div className="inline-flex items-center gap-2 bg-chart-3 px-6 py-2 -rotate-1 mt-8 text-foreground border-4">

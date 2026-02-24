@@ -8,9 +8,9 @@ export const EMOTIONS = [
 export type Emotion = typeof EMOTIONS[number];
 
 export const EMOTION_STYLES: Record<Emotion, string> = {
-  sad: 'bg-blue-400',
-  angry: 'bg-red-400',
-  inlove: 'bg-pink-400',
-  other: 'bg-zinc-400',
+  sad: 'bg-blue-300',
+  angry: 'bg-red-300',
+  inlove: 'bg-pink-300',
+  other: 'bg-zinc-300',
 } as const;
 

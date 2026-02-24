@@ -8,8 +8,8 @@ import { formatDistanceToNow, format } from 'date-fns';
 import { Button } from "@/vendor/ui/button";
 
 import { Emotion, EMOTIONS } from "@/shared/constants/emotions";
-import { EntriesResponse, Entry } from "@/features/entries/types/entry.types";
-import { useEntries } from "@/features/entries/hooks/use-entries";
+import { EntriesResponse, Entry } from "@/app/entries/types/entry.types";
+import { useEntries } from "@/app/entries/hooks/use-entries";
 import ReleaseMessagesCard from "./release-messages-card";
 import neonCat from "@/assets/gifs/neon-cat.gif";
 

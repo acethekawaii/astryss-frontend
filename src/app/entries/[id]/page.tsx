@@ -14,7 +14,7 @@ import { Button } from "@/vendor/ui/button";
 import { EMOTION_STYLES } from "@/shared/constants/emotions";
 import { Variant, VARIANT_ICONS, VARIANT_STYLES } from "@/shared/constants/variants";
 import ShareButtons from "@/shared/components/share-buttons";
-import { getEntry } from "@/features/entries/api/entries.api";
+import { getEntry } from "@/app/entries/api/entries.api";
 
 type Props = {
   params: Promise<{ id: string }>;
