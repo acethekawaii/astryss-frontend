@@ -36,6 +36,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     creator: "@astryss",
   },
+  verification: {
+    google: 'pWi6Py0Riifa7tY7mo2-i3sZhkvmClxghtZyiSwjA74',
+  },
 };
 
 export default async function RootLayout({  
