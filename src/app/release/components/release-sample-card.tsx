@@ -54,7 +54,7 @@ const ReleaseSampleCard = memo(function ReleaseSampleCard({
             width={150} 
             height={150} 
             alt="sadness" 
-            className="absolute h-full w-auto top-0 right-0 -z-40 opacity-15"
+            className="absolute h-full w-auto top-0 right-0 -z-40 opacity-50"
           />
           <p className='mt-1 leading-relaxed w-9/10 line-clamp-3'>{content}</p>
           

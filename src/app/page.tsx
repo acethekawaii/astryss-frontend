@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { ArrowRight, Star } from "lucide-react";
-import * as motion from "motion/react-client";
+import * as motion from "motion/react-client"; 
 import { Card, CardContent } from "@/vendor/ui/card";
 import { Button } from "@/vendor/ui/button";
 
@@ -19,7 +19,6 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-
   return (
     <main>
       <section className="main-container mt-24 md:mt-32">

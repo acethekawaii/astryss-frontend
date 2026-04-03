@@ -94,7 +94,7 @@ const ReleaseMessagesCard = memo(function ReleaseMessagesCard({
               width={150}
               height={150}
               alt="sadness"
-              className="absolute h-full w-auto top-0 right-0 opacity-15"
+              className="absolute h-full w-auto top-0 right-0 opacity-50"
             />
             <h2 className="font-bold text-lg mb-1">{title}</h2>
             <p className="leading-relaxed min-h-36 line-clamp-6 opacity-75">{content}</p>

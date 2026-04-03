@@ -23,7 +23,7 @@ export default function Footer() {
 
             <div className="flex gap-2">
               <Twitter className="w-8 h-8 text-main"/>
-              <Link href="https://www.facebook.com/karma.053" target="_blank">
+              <Link href="https://www.facebook.com/acethekawaii" target="_blank">
                 <Facebook className="w-8 h-8 text-main"/>
               </Link>
             </div>

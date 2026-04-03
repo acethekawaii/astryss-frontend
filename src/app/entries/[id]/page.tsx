@@ -117,7 +117,7 @@ export default async function EntryPage(props: Props) {
               width={150}
               height={150}
               alt={`${entry.emotion} emotion`}
-              className="hidden md:block absolute h-full w-auto top-0 right-0 opacity-15"
+              className="hidden md:block absolute h-full w-auto top-0 right-0 opacity-50"
             />
             
             <h2 className="font-bold text-2xl mb-1">{entry.title}</h2>
