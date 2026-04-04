@@ -42,7 +42,7 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.30, ease: "easeOut" }}
             >
-              <RandomLetterSwapForward label="astryss*" reverse={true} className="" />
+              <RandomLetterSwapForward label="astryss*" reverse={true} />
             </motion.h1>
 
             <motion.div

@@ -9,7 +9,7 @@ export const createEntrySchema = z.object({
   content: z.string().min(1, "Content is required").max(500),
   type: z.enum(["release", "unsent", "whisper"]),
   emotion: z.enum(["sad", "angry", "inlove", "other"]),
-  variants: z.array(z.enum(["legacy", "dev", "beta"])).optional(),
+  variants: z.array(z.enum(["legacy", "dev", "beta", "respawned"])).optional(),
   avatar: z
     .any()
     .optional()

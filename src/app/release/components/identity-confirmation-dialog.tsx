@@ -47,7 +47,7 @@ export default function IdentityConfirmationModal({ isOpen, setIsOpen, content }
       avatar: undefined,
       type: "release",
       emotion: "other",
-      variants: ["beta"],
+      variants: ["respawned"],
     }
   });
 
