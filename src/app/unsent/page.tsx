@@ -10,7 +10,7 @@ import { Button } from "@/vendor/ui/button";
 export const metadata: Metadata = {
   title: 'Unsent - astryss*',
   description: 'A collection of text messages that never reached their destination.',
-  keywords: ["astryss", "freedom wall", "anonymous messages", "the unsent project"],
+  keywords: ["astryss", "freedom wall", "anonymous messages", "the unsent project", "post secrets online philippines"],
   openGraph: {
     title: "",
     description: "A collection of text messages that never reached their ddestination.",

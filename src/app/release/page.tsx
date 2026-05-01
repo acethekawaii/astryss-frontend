@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from "next/link";
 import './release.css';
 
 import { Sparkle } from "lucide-react";
@@ -8,11 +9,12 @@ import { getEntries } from '@/app/entries/api/entries.api';
 import ReleaseSample from '@/app/release/components/release-samples';
 import WordCounterBox from '@/app/release/components/word-counter-box';
 import Typewriter from '@/vendor/fancy/text/typewriter';
+import { Button } from '@/vendor/ui/button';
 
 export const metadata: Metadata = {
   title: 'Release - astryss*',
   description: 'Release your feelings to the stars — a place for your thoughts to live.',
-  keywords: ["astryss", "freedom wall", "anonymous messages", "release feelings", "online diary", "safe space to share feelings"],
+  keywords: ["astryss", "anonymous messages", "release feelings", "online diary", "safe space to share feelings", "sulyap", "freedom wall app philippines", "post anonymously online"],
   openGraph: {
     title: "",
     description: "Release your feelings to the stars — a place for your thoughts to live. The stars are listening.",
@@ -63,6 +65,10 @@ export default async function ReleasePage() {
       </motion.section>
 
       <ReleaseSample initialEntries={entries} />
+
+      <Link href="/entries" className="flex justify-center mt-8">
+        <Button variant="neutral" className="cursor-pointer">Read More Entries</Button>
+      </Link>
     </main>
   )
 }

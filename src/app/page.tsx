@@ -15,7 +15,7 @@ import RandomLetterSwapForward from "@/vendor/fancy/text/random-letter-swap-forw
 export const metadata: Metadata = {
   title: "Home - astryss*",
   description: "astryss* is an anonymous freedom wall where thoughts, emotions, and unspoken feelings are released into the stars. No profiles. No judgment. Just honesty.",
-  keywords: ["astryss", "anonymous sharing", "freedom wall", "freedom wall ph", "star themed website", "space themed website", "masked emotions", "anonywall", "duoplay", "acethekawaii"]
+  keywords: ["astryss", "anonymous sharing", "freedom wall philippines app", "star themed website", "space themed website", "anonymous freedom wall website", "anonywall", "acethekawaii"]
 };
 
 export default function Home() {
@@ -85,6 +85,16 @@ export default function Home() {
                 <Button variant="neutral" className="px-8 py-6 cursor-pointer">Read Others</Button>
               </Link>
             </motion.div> 
+
+            <motion.p 
+              className="mt-6 text-sm text-text-600 font-medium tracking-wide flex items-center justify-center md:justify-start text-center md:text-left gap-2"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.90 }}
+            >
+              ✨ No accounts required. 100% Free. Zero ads. Forever.
+            </motion.p>
           </div>
 
           <div className="w-full h-full mt-6 md:mt-0 md:w-2/3 relative flex items-center justify-end">
@@ -118,10 +128,11 @@ export default function Home() {
                 x: { duration: 6, repeat: Infinity, ease: "easeInOut" },
                 rotate: { duration: 6, repeat: Infinity, ease: "easeInOut" }
               }}
-              className="w-2/3 absolute"
+              className="absolute inset-x-0 mx-auto w-2/3"
             >
               <Image 
                 src={Astronaut}
+                className="w-full h-auto"
                 width={400} 
                 height={225} 
                 alt="Astronaut holding star" 

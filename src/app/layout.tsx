@@ -49,7 +49,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en"> 
       <body className={`${jetbrains.className} ${spaceGrotesk.className} ${interTight.variable} antialiased`}>
         <ReactQueryProvider>
           <Header />
