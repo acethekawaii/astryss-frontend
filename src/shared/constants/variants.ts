@@ -4,7 +4,8 @@ export const VARIANTS = [
   'legacy',
   'dev',
   'beta',
-  'respawned'
+  'respawned',
+  'stardust'
 ] as const;
 
 export type Variant = typeof VARIANTS[number];
@@ -14,11 +15,13 @@ export const VARIANT_STYLES: Record<Variant, string> = {
   dev: 'bg-purple-300',
   beta: 'bg-blue-300',
   respawned: 'bg-green-300',
+  stardust: 'bg-yellow-300',
 } as const;
 
 export const VARIANT_ICONS: Record<Variant, any> = {
   legacy: History,
   dev: Wrench,
   beta: Sparkles,
-  respawned: Cross
+  respawned: Cross,
+  stardust: Sparkles
 };
