@@ -61,7 +61,7 @@ export default function Header() {
   return (
     <>
       <header 
-        className={`px-4 w-full py-4 fixed top-0 flex justify-between md:justify-center items-center gap-6 z-60 transition-all duration-500 ease-in-out ${hasScrolled ? "shadow-sm bg-background" : "shadow-none"}`}
+        className={`px-4 w-full py-4 fixed top-0 flex justify-between md:justify-center items-center gap-3 lg:gap-6 z-60 transition-all duration-500 ease-in-out ${hasScrolled ? "shadow-sm bg-background" : "shadow-none"}`}
       >
         <Image src="/assets/brand-logo-outlined.png" alt="Logo" width={100} height={100} className="hidden md:block h-16 w-auto relative"/>
         
@@ -94,6 +94,13 @@ export default function Header() {
               <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
                 <Link href="/time-capsule">
                   Time Capsule
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                <Link href="/stardust">
+                  Stardust
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -140,6 +147,9 @@ export default function Header() {
           <ul className="text-2xl space-y-4">
             <li>
               <Link href="/">Home</Link>
+            </li>
+            <li>
+              <Link href="/stardust">Stardust</Link>
             </li>
             <li>
               <Link href="/faqs">FAQ's</Link>

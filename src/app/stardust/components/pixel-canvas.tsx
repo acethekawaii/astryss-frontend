@@ -1,93 +1,116 @@
 'use client'
-// ↑ This line is what makes it a Client Component.
-// Without this, useRef / useEffect / click handlers don't work.
 
-import { useRef, useEffect, useCallback } from 'react'
-import { useCanvasStore, COLS, ROWS } from '@/store/use-pixel-store'
+import { useEffect, useEffectEvent, useRef } from 'react'
+import { LoaderCircle, Maximize, Minus, Plus } from 'lucide-react'
 
-// CELL_SIZE = how many screen pixels each "art pixel" takes up
-// 8px per cell × 6 cols = 48px wide canvas (tiny for now, scales up later)
-const CELL_SIZE = 8
+import { cn } from '@/vendor/lib/utils'
+import { Button } from '@/vendor/ui/button'
 
-export default function CanvasBoard() {
-  // canvasRef is our handle to the actual <canvas> DOM element
+import { ZOOM_STEP } from '../constants/stardust.constants'
+import type { BoardModel } from '../lib/board-model'
+import { BoardViewport } from '../lib/board-viewport'
+import type { Cell } from '../types/stardust.types'
+
+interface PixelCanvasProps {
+  board: BoardModel
+  isReady: boolean
+  selectedCell: Cell | null
+  selectedColor: string
+  onSelectCell: (cell: Cell) => void
+  /** Must give the frame its size; the layout matches it to the board's aspect ratio. */
+  className?: string
+}
+
+const ZOOM_BUTTON_CLASS = 'size-8 cursor-pointer touch-manipulation sm:size-9'
+
+export default function PixelCanvas({
+  board,
+  isReady,
+  selectedCell,
+  selectedColor,
+  onSelectCell,
+  className,
+}: PixelCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const viewportRef = useRef<BoardViewport | null>(null)
+  const selectCell = useEffectEvent((cell: Cell) => onSelectCell(cell))
 
-  const pixels = useCanvasStore((s) => s.pixels)
-  const activeColor = useCanvasStore((s) => s.activeColor)
-  const paintPixel = useCanvasStore((s) => s.paintPixel)
-
-  // drawGrid runs every time 'pixels' changes in the store.
-  // It loops through every pixel and fills a rectangle on the canvas.
-  const drawGrid = useCallback(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    pixels.forEach((color, index) => {
-      // Convert flat index back to row/col coordinates
-      const col = index % COLS
-      const row = Math.floor(index / COLS)
-
-      // Fill the pixel cell with its color
-      ctx.fillStyle = color
-      ctx.fillRect(
-        col * CELL_SIZE,  // x position on canvas
-        row * CELL_SIZE,  // y position on canvas
-        CELL_SIZE,        // width
-        CELL_SIZE         // height
-      )
-
-      // Draw a subtle 1px border around each cell so grid is visible
-      ctx.strokeStyle = 'rgba(0,0,0,0.08)'
-      ctx.lineWidth = 0.5
-      ctx.strokeRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
-    })
-  }, [pixels])
-
-  // Redraw every time pixels change
   useEffect(() => {
-    drawGrid()
-  }, [drawGrid])
+    const canvas = canvasRef.current
+    if (!canvas) {
+      return
+    }
+    const viewport = new BoardViewport(canvas, board, { onSelectCell: (cell) => selectCell(cell) })
+    viewportRef.current = viewport
+    return () => {
+      viewport.destroy()
+      viewportRef.current = null
+    }
+  }, [board])
 
-  // When user clicks the canvas, figure out WHICH cell they clicked
-  // by dividing the click position by CELL_SIZE
-  const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLCanvasElement>) => {
-      const canvas = canvasRef.current
-      if (!canvas) return
-
-      const rect = canvas.getBoundingClientRect()
-      // Mouse position relative to the canvas element
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
-
-      // Scale for device pixel ratio (important for sharp rendering on retina screens)
-      const scaleX = canvas.width / rect.width
-      const scaleY = canvas.height / rect.height
-
-      const col = Math.floor((x * scaleX) / CELL_SIZE)
-      const row = Math.floor((y * scaleY) / CELL_SIZE)
-
-      // Guard: ignore clicks outside the grid
-      if (col < 0 || col >= COLS || row < 0 || row >= ROWS) return
-
-      const index = row * COLS + col
-      paintPixel(index, activeColor)
-    },
-    [activeColor, paintPixel]
-  )
+  useEffect(() => {
+    viewportRef.current?.setSelection(selectedCell, selectedColor)
+  }, [selectedCell, selectedColor])
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={COLS * CELL_SIZE}
-      height={ROWS * CELL_SIZE}
-      onClick={handleClick}
-      // image-rendering: pixelated = no blur when CSS scales it up
-      style={{ imageRendering: 'pixelated', cursor: 'crosshair' }}
-      className="border border-border rounded"
-    />
+    <div
+      className={cn(
+        'relative overflow-hidden rounded-base border-4 border-border bg-[#F3EBC3] bg-[radial-gradient(rgb(0_0_0/0.13)_1px,transparent_1px)] bg-size-[16px_16px] shadow-shadow has-[canvas:focus-visible]:outline-4 has-[canvas:focus-visible]:outline-offset-2 has-[canvas:focus-visible]:outline-chart-5',
+        className,
+      )}
+    >
+      <canvas
+        ref={canvasRef}
+        tabIndex={0}
+        role="application"
+        aria-roledescription="pixel board"
+        aria-label="Stardust board. Drag to pan, pinch or scroll to zoom, and tap a pixel to select it. Keyboard: arrow keys move the selection, plus and minus zoom, zero shows the whole board."
+        className="absolute inset-0 size-full cursor-crosshair touch-none select-none outline-none [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none]"
+      />
+      {/* Soft inner shadow: the board reads as sitting just below the frame's edge. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 shadow-[inset_0_0_18px_rgb(0_0_0/0.22)]" />
+
+      {!isReady && (
+        <div className="pointer-events-none absolute inset-0 grid place-items-center p-4">
+          <p
+            role="status"
+            className="inline-flex items-center gap-2 rounded-base border-2 border-border bg-main px-4 py-2 font-bold uppercase shadow-shadow"
+          >
+            <LoaderCircle aria-hidden className="size-4 motion-safe:animate-spin" />
+            Loading board
+          </p>
+        </div>
+      )}
+
+      <div className="absolute right-2 bottom-2 flex gap-1.5 sm:right-3 sm:bottom-3 sm:gap-2">
+        <Button
+          variant="neutral"
+          size="icon"
+          aria-label="Zoom in"
+          className={ZOOM_BUTTON_CLASS}
+          onClick={() => viewportRef.current?.zoomBy(ZOOM_STEP)}
+        >
+          <Plus />
+        </Button>
+        <Button
+          variant="neutral"
+          size="icon"
+          aria-label="Zoom out"
+          className={ZOOM_BUTTON_CLASS}
+          onClick={() => viewportRef.current?.zoomBy(1 / ZOOM_STEP)}
+        >
+          <Minus />
+        </Button>
+        <Button
+          variant="neutral"
+          size="icon"
+          aria-label="Show the whole board"
+          className={ZOOM_BUTTON_CLASS}
+          onClick={() => viewportRef.current?.showWholeBoard()}
+        >
+          <Maximize />
+        </Button>
+      </div>
+    </div>
   )
 }

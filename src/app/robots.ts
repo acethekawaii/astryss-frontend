@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',           // allow everything
       disallow: '/private/' // block private routes (if any)
     },
-    sitemap: 'https://astryss.acethekawaii.work/sitemap.xml',
+    sitemap: 'https://astryss.acethekawaii.com/sitemap.xml',
   }
 }
