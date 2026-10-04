@@ -9,8 +9,7 @@ export const metadata: Metadata = {
 
 export default function StardustPage() {
   return (
-    // Wider than the site's usual max-w-7xl container: the board grows to use the whole screen.
-    <main className="mx-auto w-full px-4 pt-22 pb-8 md:pt-28 lg:px-6">
+    <main className="main-container pt-22 pb-8 md:pt-28">
       <StardustBoard />
     </main>
   )

@@ -18,19 +18,19 @@ const PANEL_WIDTH = '14rem'
 const PANEL_GAP = '1.5rem'
 /** The frame's 4px border, on both sides. */
 const FRAME_BORDERS = '8px'
-/** Short screens (landscape phones) still get a usable board; the page scrolls instead. */
+/** Short screens still get a usable board; the page scrolls instead. */
 const FRAME_MIN_WIDTH = '20rem'
 
 /**
  * Sizes the board frame in CSS, so even the server render has the right shape: the frame keeps
- * the board's aspect ratio and is as large as the screen allows. Its width is capped by the space
- * left beside the panel (desktop) or the full width (stacked layouts), and by the viewport height
- * minus `--board-reserve`, the height everything else on the page needs.
+ * the board's aspect ratio and is as large as the screen allows. On phones it uses the full
+ * container width. From the medium breakpoint up, its width is capped by the viewport height
+ * minus `--board-reserve`, and on desktop also by the space left beside the panel.
  *
- * The board area is then rounded down so every board pixel covers the same whole number of
- * device pixels: at a fractional scale some columns would be a device pixel wider than others
- * and the grid would look uneven. Until the pixel ratio is known (server render), it only rounds
- * to whole CSS pixels.
+ * At the capped sizes, the board area is rounded down so every board pixel covers the same whole
+ * number of device pixels. Until the pixel ratio is known (server render), it only rounds to
+ * whole CSS pixels. Phones favor using the available width; the viewport still draws square
+ * board pixels at that fractional scale.
  */
 function frameSizing({ width, height }: { width: number; height: number }, pixelRatio: number | null): CSSProperties {
   const ratio = width / height
@@ -39,7 +39,8 @@ function frameSizing({ width, height }: { width: number; height: number }, pixel
   return {
     '--frame-max-width-stacked': `min(100cqw, max(${FRAME_MIN_WIDTH}, ${widthForScreenHeight}))`,
     '--frame-max-width-beside': `min(calc(100cqw - ${PANEL_WIDTH} - ${PANEL_GAP}), ${widthForScreenHeight})`,
-    '--board-area-width': `round(down, calc(var(--frame-max-width) - ${FRAME_BORDERS}), ${snapStep})`,
+    '--board-area-width-mobile': `calc(100cqw - ${FRAME_BORDERS})`,
+    '--board-area-width-snapped': `round(down, calc(var(--frame-max-width) - ${FRAME_BORDERS}), ${snapStep})`,
     '--frame-width': `calc(var(--board-area-width) + ${FRAME_BORDERS})`,
     '--frame-height': `calc(var(--board-area-width) * ${height} / ${width} + ${FRAME_BORDERS})`,
   } as CSSProperties
@@ -66,7 +67,7 @@ export default function StardustBoard() {
     <div className="@container">
       <div
         style={frameSizing(boardSize, pixelRatio)}
-        className="grid gap-3 [--board-reserve:23rem] [--frame-max-width:var(--frame-max-width-stacked)] md:[--board-reserve:22.5rem] xl:h-(--frame-height) xl:grid-cols-[var(--frame-width)_14rem] xl:grid-rows-[auto_minmax(0,1fr)] xl:justify-center xl:gap-x-6 xl:gap-y-4 xl:[--board-reserve:10rem] xl:[--frame-max-width:var(--frame-max-width-beside)]"
+        className="grid gap-3 [--board-area-width:var(--board-area-width-mobile)] [--board-reserve:23rem] [--frame-max-width:var(--frame-max-width-stacked)] md:[--board-area-width:var(--board-area-width-snapped)] md:[--board-reserve:22.5rem] xl:h-(--frame-height) xl:grid-cols-[var(--frame-width)_14rem] xl:grid-rows-[auto_minmax(0,1fr)] xl:justify-center xl:gap-x-6 xl:gap-y-4 xl:[--board-reserve:10rem] xl:[--frame-max-width:var(--frame-max-width-beside)]"
       >
         <header className="flex w-full max-w-(--frame-width) items-center justify-between gap-3 justify-self-center xl:col-start-2 xl:row-start-1 xl:flex-col xl:items-start">
           <h1 className="inline-flex -rotate-1 items-center gap-2 rounded-base border-2 border-border bg-main px-3 py-1 text-xl font-bold uppercase shadow-shadow [font-family:inherit] lg:text-2xl">

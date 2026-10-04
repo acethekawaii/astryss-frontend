@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useEffectEvent, useRef } from 'react'
+
 import { cn } from '@/vendor/lib/utils'
 import { Button } from '@/vendor/ui/button'
 
@@ -22,9 +24,34 @@ function formatCountdown(totalSeconds: number): string {
 
 export default function PlacePanel({ selectedCell, color, isReady, isPlacing, onPlace }: PlacePanelProps) {
   const { cooldown, remainingSeconds } = useCooldown()
+  const placeButtonRef = useRef<HTMLButtonElement>(null)
   const isCoolingDown = remainingSeconds > 0
+  const isPlaceDisabled = !isReady || !selectedCell || isCoolingDown || isPlacing
   const cooldownLeft = cooldown && isCoolingDown ? Math.min(1, (remainingSeconds * 1000) / cooldown.durationMs) : 0
   const label = isPlacing ? 'Placing…' : isCoolingDown ? `Wait ${formatCountdown(remainingSeconds)}` : 'Place'
+
+  const placeWithEnter = useEffectEvent((event: KeyboardEvent) => {
+    if (event.key !== 'Enter' || event.repeat || event.defaultPrevented || isPlaceDisabled) {
+      return
+    }
+
+    const target = event.target
+    if (
+      target instanceof HTMLInputElement ||
+      target instanceof HTMLTextAreaElement ||
+      (target instanceof Node && placeButtonRef.current?.contains(target))
+    ) {
+      return
+    }
+
+    event.preventDefault()
+    onPlace()
+  })
+
+  useEffect(() => {
+    window.addEventListener('keydown', placeWithEnter)
+    return () => window.removeEventListener('keydown', placeWithEnter)
+  }, [])
 
   return (
     <div className="flex items-center gap-3 xl:flex-col xl:items-stretch">
@@ -47,8 +74,9 @@ export default function PlacePanel({ selectedCell, color, isReady, isPlacing, on
       </div>
 
       <Button
+        ref={placeButtonRef}
         onClick={onPlace}
-        disabled={!isReady || !selectedCell || isCoolingDown || isPlacing}
+        disabled={isPlaceDisabled}
         // While cooling down the button sits "pressed in" (shifted into its shadow's place).
         variant={isCoolingDown ? 'noShadow' : 'default'}
         className={cn(
@@ -64,7 +92,15 @@ export default function PlacePanel({ selectedCell, color, isReady, isPlacing, on
             style={{ width: `${cooldownLeft * 100}%` }}
           />
         )}
-        <span className="relative">{label}</span>
+        <span className="relative inline-flex items-center gap-2">
+          {label}
+          <kbd
+            aria-hidden
+            className="hidden rounded-base border border-current bg-secondary-background/70 px-1.5 py-0.5 text-[10px] leading-none tracking-normal normal-case [@media(hover:hover)_and_(pointer:fine)]:inline-flex"
+          >
+            Enter
+          </kbd>
+        </span>
       </Button>
     </div>
   )
