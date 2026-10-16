@@ -27,8 +27,8 @@ export default function Timeline() {
   const [selectedYearIndex, setSelectedYearIndex] = useState(2);
 
   return (
-    <section className="main-container md:h-screen md:flex gap-20 mt-4">
-      <div className="w-full md:w-1/2 md:h-240 md:py-16 py-8 text-2xl md:text-[12.5rem] font-year font-black flex md:flex-col justify-between items-start leading-none">
+    <section className="main-container md:flex md:items-center gap-20 mt-4">
+      <div className="@container w-full min-w-0 md:w-1/2 md:py-16 py-8 flex md:flex-col justify-between md:justify-start md:gap-8 items-start">
         {timelineData.map((item, index) => {
           const isSelected = index === selectedYearIndex;
           
@@ -40,9 +40,9 @@ export default function Timeline() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.7 }}
-              className={`cursor-pointer`}
+              className="cursor-pointer font-year font-black leading-none text-2xl md:text-[clamp(3.5rem,34cqi,12.5rem)]"
             >
-              <time className={`transition-all duration-700 ${isSelected ? "" : "opacity-35 text-text-600"}`} dateTime={`${item.year}`}>
+              <time className={`transition-all duration-700 whitespace-nowrap ${isSelected ? "" : "opacity-35 text-text-600"}`} dateTime={`${item.year}`}>
                 {item.year}
               </time>
             </motion.button>
@@ -55,7 +55,7 @@ export default function Timeline() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 1, delay: 0.65 }}
-        className="md:w-1/2 flex flex-col justify-center"
+        className="md:w-1/2 md:min-w-0 flex flex-col justify-center"
       >
         <div className="flex items-center gap-4">
           <div className="w-16 h-0.5 bg-linear-to-r from-[#8b7355] to-transparent" />
