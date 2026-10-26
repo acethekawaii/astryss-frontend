@@ -59,6 +59,23 @@ export async function fetchBoard(): Promise<BoardSnapshot> {
   return decodeSnapshot(await response.arrayBuffer())
 }
 
+/**
+ * Counts every pixel ever placed, on every board size. Unlike the other endpoints the body has no
+ * envelope, and the server reuses one count for 30 s.
+ */
+export async function fetchTotalPixels(): Promise<number> {
+  const response = await fetch(`${STARDUST_URL}/stats`, { cache: 'no-store' })
+  if (!response.ok) {
+    throw new Error(`Stats request failed with status ${response.status}`)
+  }
+
+  const totalPixels = ((await readJson(response)) as { totalPixels?: unknown } | null)?.totalPixels
+  if (typeof totalPixels !== 'number' || !Number.isFinite(totalPixels)) {
+    throw new Error('Stats response did not include a pixel total')
+  }
+  return totalPixels
+}
+
 /** Places one pixel. Expected rejections come back as outcomes; network failures throw. */
 export async function placePixel(token: string, cell: Cell, color: number): Promise<PlacementOutcome> {
   const response = await fetch(`${STARDUST_URL}/pixels`, {
