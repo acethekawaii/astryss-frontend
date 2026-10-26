@@ -2,12 +2,13 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import * as motion from "motion/react-client"; 
 import { Card, CardContent } from "@/vendor/ui/card";
 import { Button } from "@/vendor/ui/button";
 
 import Timeline from "@/app/components/timeline";
+import StardustFeature from "@/app/components/stardust-feature";
 import Astronaut from "@/assets/astronaut.png";
 import AboutHero from "@/assets/about-hero-bg.png";
 import RandomLetterSwapForward from "@/vendor/fancy/text/random-letter-swap-forward-anim";
@@ -29,8 +30,8 @@ export default function Home() {
           transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
           className="inline-flex items-center gap-2 bg-accent text-main px-6 py-4 rotate-4 hover:rotate-0"
         >
-          <Star className="w-5 h-5" />
-          Version 2.0
+          <Image src="/assets/star-icon.png" alt="" width={32} height={32} className="size-8 -my-1" />
+          Version 2.1
         </motion.div>
 
         <div className="md:flex items-center">
@@ -141,6 +142,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <StardustFeature />
 
       <Timeline />
     </main>
