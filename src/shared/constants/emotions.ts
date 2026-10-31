@@ -7,6 +7,13 @@ export const EMOTIONS = [
 
 export type Emotion = typeof EMOTIONS[number];
 
+export const EMOTION_LABELS: Record<Emotion, string> = {
+  sad: 'Sad',
+  angry: 'Angry',
+  inlove: 'In love',
+  other: 'Mixed feelings',
+};
+
 export const EMOTION_STYLES: Record<Emotion, string> = {
   sad: 'bg-blue-300',
   angry: 'bg-red-300',

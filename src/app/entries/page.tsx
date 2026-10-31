@@ -7,6 +7,8 @@ import { Card } from "@/vendor/ui/card";
 import ReleaseMessages from "./components/release-messages";
 import { getEntries } from "@/app/entries/api/entries.api";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Entries - astryss*",
   description: "Browse all public entries created accross the platform.",
@@ -14,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function EntriesPage() {
-  const entries = await getEntries(18);
+  const entries = await getEntries(18, undefined, "release");
 
   return (
     <main className="main-container pt-12 md:pt-20">

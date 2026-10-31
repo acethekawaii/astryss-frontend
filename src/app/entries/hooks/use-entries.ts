@@ -32,9 +32,11 @@ export function useEntries(options: UseEntriesOptions = {}) {
       pageParams: [undefined],
     } : undefined,
     
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    staleTime: 5 * 60 * 1000,
+    // Server data gives the page an immediate first render, then an on-mount
+    // refetch protects client-side navigation from a prefetched/stale RSC tree.
+    refetchOnMount: "always",
+    refetchOnWindowFocus: true,
+    staleTime: 30 * 1000,
   });
 }
 
@@ -43,8 +45,11 @@ export function useCreateEntry() {
 
   return useMutation({
     mutationFn: createEntry,
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["entries"] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["entries"],
+        refetchType: "all",
+      });
       
       toast.success("Your message has been sent to the stars! ✨");
     },

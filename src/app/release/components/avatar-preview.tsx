@@ -4,20 +4,18 @@ type Props = {
   src: string | null 
 };
 
+const DEFAULT_AVATAR_URL = "https://api.dicebear.com/9.x/pixel-art/svg?seed=undefined&size=80";
+
 export default function AvatarPreview({ src }: Props) {
-  if (!src) {
-    return <div className="w-20 h-20 bg-gray-100 rounded-full" aria-hidden />;
-  }
   return (
-    <>
-      <Image
-        src={src}
-        alt="Avatar preview"
-        width={80}
-        height={80}
-        className="border-2 border-border rounded-sm w-20 h-20"
-        loading="lazy"
-      />
-    </>
+    <Image
+      src={src ?? DEFAULT_AVATAR_URL}
+      alt={src ? "Selected avatar preview" : "Default pixel-art avatar"}
+      width={80}
+      height={80}
+      className="h-20 w-20 rounded-sm border-2 border-border bg-gray-100 object-cover"
+      loading="lazy"
+      unoptimized
+    />
   );
 }

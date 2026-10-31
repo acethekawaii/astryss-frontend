@@ -11,7 +11,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/vendor/ui/card";
 import { Badge } from "@/vendor/ui/badge";
 import { Button } from "@/vendor/ui/button";
 
-import { EMOTION_STYLES } from "@/shared/constants/emotions";
+import { EMOTION_LABELS, EMOTION_STYLES } from "@/shared/constants/emotions";
 import { Variant, VARIANT_ICONS, VARIANT_STYLES } from "@/shared/constants/variants";
 import ShareButtons from "@/shared/components/share-buttons";
 import { getEntry } from "@/app/entries/api/entries.api";
@@ -137,7 +137,7 @@ export default async function EntryPage(props: Props) {
 
         <div className="mt-6">
           <h2 className="text-xl">
-            Emotion: <span className="opacity-75 capitalize">{entry.emotion}</span>
+            Emotion: <span className="opacity-75">{EMOTION_LABELS[entry.emotion]}</span>
           </h2>
         </div>
       </div>

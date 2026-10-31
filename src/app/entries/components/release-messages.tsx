@@ -7,7 +7,7 @@ import { formatDistanceToNow, format } from 'date-fns';
 
 import { Button } from "@/vendor/ui/button";
 
-import { Emotion, EMOTIONS } from "@/shared/constants/emotions";
+import { Emotion, EMOTIONS, EMOTION_LABELS } from "@/shared/constants/emotions";
 import { EntriesResponse, Entry } from "@/app/entries/types/entry.types";
 import { useEntries } from "@/app/entries/hooks/use-entries";
 import ReleaseMessagesCard from "./release-messages-card";
@@ -56,7 +56,7 @@ export default function ReleaseMessages({ initialEntries }: { initialEntries: En
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {emotion.charAt(0).toUpperCase() + emotion.slice(1)}
+            {EMOTION_LABELS[emotion]}
           </motion.button>
         ))}
       </motion.div>

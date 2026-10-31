@@ -30,11 +30,10 @@ export async function getEntries(
 
     const url = `${API_CONFIG.BASE_URL}/entries?${params.toString()}`;
 
-    const response = await fetch(url, {
-      next: {
-        revalidate: 60
-      }
-    });
+    // Entry feeds are user-generated and change immediately after a post.
+    // React Query handles short-lived client caching; the server-rendered list
+    // should always start from the latest API response.
+    const response = await fetch(url, { cache: "no-store" });
 
     if (!response.ok) {
       throw new Error(`API Error: ${response.status} ${response.statusText}`);
@@ -58,6 +57,9 @@ export async function createEntry(data: CreateEntryInput): Promise<ApiResponse<C
 
   if (data.displayName) {
     formData.append("displayName", data.displayName);
+  }
+  if (data.title) {
+    formData.append("title", data.title);
   }
   formData.append("content", data.content);
   formData.append("type", data.type);
@@ -97,8 +99,6 @@ export async function getEntry(id: string): Promise<Entry | null> {
         tags: [`entry-${id}`],
       },
     });
-
-    console.log(response)
 
     if (!response.ok) {
       return null;

@@ -11,6 +11,8 @@ import WordCounterBox from '@/app/release/components/word-counter-box';
 import Typewriter from '@/vendor/fancy/text/typewriter';
 import { Button } from '@/vendor/ui/button';
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: 'Release - astryss*',
   description: 'Release your feelings to the stars — a place for your thoughts to live.',
@@ -28,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ReleasePage() {
-  const entries = await getEntries(6);
+  const entries = await getEntries(6, undefined, "release");
 
   return (
     <main className="main-container pt-12 md:pt-20">
