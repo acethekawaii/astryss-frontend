@@ -10,6 +10,7 @@ import { usePlacePixel } from '../hooks/use-place-pixel'
 import { BoardModel } from '../lib/board-model'
 import type { Cell } from '../types/stardust.types'
 import ColorPicker from './color-picker'
+import HowToPlay from './how-to-play'
 import LiveStatus from './live-status'
 import PixelCanvas from './pixel-canvas'
 import PlacePanel from './place-panel'
@@ -67,15 +68,32 @@ export default function StardustBoard() {
     <div className="@container">
       <div
         style={frameSizing(boardSize, pixelRatio)}
-        className="grid gap-3 [--board-area-width:var(--board-area-width-mobile)] [--board-reserve:23rem] [--frame-max-width:var(--frame-max-width-stacked)] md:[--board-area-width:var(--board-area-width-snapped)] md:[--board-reserve:22.5rem] xl:h-(--frame-height) xl:grid-cols-[var(--frame-width)_14rem] xl:grid-rows-[auto_minmax(0,1fr)] xl:justify-center xl:gap-x-6 xl:gap-y-4 xl:[--board-reserve:10rem] xl:[--frame-max-width:var(--frame-max-width-beside)]"
+        className="grid gap-3 [--board-area-width:var(--board-area-width-mobile)] [--board-reserve:23rem] [--frame-max-width:var(--frame-max-width-stacked)] md:[--board-area-width:var(--board-area-width-snapped)] md:[--board-reserve:22.5rem] xl:grid-cols-[var(--frame-width)_14rem] xl:justify-center xl:gap-x-6 xl:gap-y-4 xl:[--board-reserve:10rem] xl:[--frame-max-width:var(--frame-max-width-beside)]"
       >
-        <header className="flex w-full max-w-(--frame-width) items-center justify-between gap-3 justify-self-center xl:col-start-2 xl:row-start-1 xl:flex-col xl:items-start">
-          <h1 className="inline-flex -rotate-1 items-center gap-2 rounded-base border-2 border-border bg-main px-3 py-1 text-xl font-bold uppercase shadow-shadow [font-family:inherit] lg:text-2xl">
-            <Sparkles aria-hidden className="size-5 lg:size-6" />
-            Stardust
-          </h1>
-          <LiveStatus status={status} />
-        </header>
+        <div className="contents xl:col-start-2 xl:row-start-1 xl:flex xl:h-(--frame-height) xl:min-h-0 xl:flex-col xl:gap-4">
+          <header className="order-1 flex w-full max-w-(--frame-width) items-center justify-between gap-3 justify-self-center xl:flex-col xl:items-start">
+            <h1 className="inline-flex -rotate-1 items-center gap-2 rounded-base border-2 border-border bg-main px-3 py-1 text-xl font-bold uppercase shadow-shadow [font-family:inherit] lg:text-2xl">
+              <Sparkles aria-hidden className="size-5 lg:size-6" />
+              Stardust
+            </h1>
+            <LiveStatus status={status} />
+          </header>
+
+          {/* Side by side (xl) this card stretches to the frame's bottom edge so both columns line up. */}
+          <section
+            aria-label="Paint"
+            className="order-4 flex w-full max-w-(--frame-width) flex-col gap-3 self-start justify-self-center rounded-base border-2 border-border bg-secondary-background p-3 shadow-shadow xl:min-h-0 xl:flex-1 xl:gap-4 xl:self-stretch xl:overflow-y-auto xl:p-4"
+          >
+            <ColorPicker palette={palette} selectedIndex={activeColorIndex} onSelect={setColorIndex} />
+            <PlacePanel
+              selectedCell={selectedCell}
+              color={palette[activeColorIndex]}
+              isReady={isReady}
+              isPlacing={isPlacing}
+              onPlace={placeAtSelection}
+            />
+          </section>
+        </div>
 
         <PixelCanvas
           board={board}
@@ -83,26 +101,12 @@ export default function StardustBoard() {
           selectedCell={selectedCell}
           selectedColor={palette[activeColorIndex]}
           onSelectCell={setSelectedCell}
-          className="h-(--frame-height) w-(--frame-width) justify-self-center xl:col-start-1 xl:row-span-2 xl:row-start-1"
+          className="order-2 h-(--frame-height) w-(--frame-width) justify-self-center xl:col-start-1 xl:row-start-1"
         />
 
-        {/* Side by side (xl) this card stretches to the frame's bottom edge so both columns line up. */}
-        <section
-          aria-label="Paint"
-          className="flex w-full max-w-(--frame-width) flex-col gap-3 self-start justify-self-center rounded-base border-2 border-border bg-secondary-background p-3 shadow-shadow xl:col-start-2 xl:row-start-2 xl:min-h-0 xl:gap-4 xl:self-stretch xl:overflow-y-auto xl:p-4"
-        >
-          <ColorPicker palette={palette} selectedIndex={activeColorIndex} onSelect={setColorIndex} />
-          <PlacePanel
-            selectedCell={selectedCell}
-            color={palette[activeColorIndex]}
-            isReady={isReady}
-            isPlacing={isPlacing}
-            onPlace={placeAtSelection}
-          />
-          <p className="hidden text-xs leading-relaxed text-text-600 xl:mt-auto xl:block">
-            Drag to pan, scroll to zoom, click a pixel to select it. Placing starts a short cooldown.
-          </p>
-        </section>
+        <div className="order-3 xl:col-start-1 xl:row-start-2">
+          <HowToPlay />
+        </div>
       </div>
     </div>
   )

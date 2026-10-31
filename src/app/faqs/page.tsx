@@ -25,6 +25,11 @@ const FAQS: FaqEntry[] = [
     question: "I cried while writing an entry, and I would like to file charges. Help?",
     answer: "Heh.",
   },
+  {
+    id: 4,
+    question: "Can I create NSFW content in Stardust?",
+    answer: "Yes, feel free. Stardust is unmoderated, so let your imagination run wild—even if it wanders somewhere NSFW. Stardust doesn't judge.",
+  }
 ]
 
 export const metadata: Metadata = {

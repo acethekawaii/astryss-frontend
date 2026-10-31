@@ -60,7 +60,7 @@ export default function Home() {
             </motion.div>
             
             <motion.p 
-              className="mt-6 md:mt-12 leading-relaxed text-justify"
+              className="mt-6 md:mt-12 leading-relaxed"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}

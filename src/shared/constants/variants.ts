@@ -1,11 +1,12 @@
-import { History, Wrench, Sparkles, Cross } from "lucide-react";
+import { History, Wrench, Sparkles, Cross, Ghost } from "lucide-react";
 
 export const VARIANTS = [
   'legacy',
   'dev',
   'beta',
   'respawned',
-  'stardust'
+  'stardust',
+  'halloween',
 ] as const;
 
 export type Variant = typeof VARIANTS[number];
@@ -16,6 +17,7 @@ export const VARIANT_STYLES: Record<Variant, string> = {
   beta: 'bg-blue-300',
   respawned: 'bg-green-300',
   stardust: 'bg-yellow-300',
+  halloween: 'bg-orange-300',
 } as const;
 
 export const VARIANT_ICONS: Record<Variant, any> = {
@@ -23,5 +25,6 @@ export const VARIANT_ICONS: Record<Variant, any> = {
   dev: Wrench,
   beta: Sparkles,
   respawned: Cross,
-  stardust: Sparkles
+  stardust: Sparkles,
+  halloween: Ghost,
 };

@@ -26,7 +26,7 @@ export default function StardustLiveMarker({ blink = false, className }: Stardus
         aria-hidden
         animate={isBlinking ? BLINK : STEADY}
         transition={isBlinking ? BLINK_TRANSITION : { duration: 0 }}
-        className="size-2.5 shrink-0 rounded-full bg-chart-3"
+        className="size-2.5 shrink-0 bg-chart-4"
       />
       Live
     </span>

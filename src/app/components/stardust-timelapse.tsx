@@ -2,12 +2,14 @@
 
 import { useRef, useState } from 'react'
 import Image from 'next/image'
-import { Pause, Play } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowUpRight, Pause, Play } from 'lucide-react'
 
 import { cn } from '@/vendor/lib/utils'
 import { usePrefersReducedMotion } from '@/shared/hooks/use-prefers-reduced-motion'
 
 import StardustLiveMarker from './stardust-live-marker'
+import StardustPixelCount from './stardust-pixel-count'
 
 const POSTER_SRC = '/assets/stardust/stardust-poster.png'
 const POSTER_WIDTH = 1920
@@ -98,11 +100,15 @@ export default function StardustTimelapse({ className }: { className?: string })
         )}
       </div>
 
-      <figcaption className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 bg-main px-3 py-2.5 text-xs font-bold text-foreground sm:text-sm lg:px-4">
-        <span>Drawn by strangers, pixel by pixel.</span>
-        <time dateTime="2026-09-27" className="tracking-widest uppercase">
-          Since Sep 27, 2026
-        </time>
+      <figcaption className="flex min-h-14 flex-col justify-center gap-2 bg-main px-3 py-3 text-xs font-bold text-foreground sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:text-sm lg:px-4">
+        <StardustPixelCount />
+        <Link
+          href="/stardust"
+          className="inline-flex shrink-0 items-center gap-1.5 underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-chart-5"
+        >
+          Your pixel is next
+          <ArrowUpRight aria-hidden className="size-4" />
+        </Link>
       </figcaption>
     </figure>
   )

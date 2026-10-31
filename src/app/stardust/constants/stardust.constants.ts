@@ -31,7 +31,7 @@ export const DEFAULT_COLOR_INDEX = 5
 export const DEFAULT_BOARD_SIZE = { width: 192, height: 108 } as const
 
 /** Used only if a successful placement comes back without a readable `nextAllowedAt`. */
-export const FALLBACK_COOLDOWN_MS = 30_000
+export const FALLBACK_COOLDOWN_MS = 5_000
 export const COOLDOWN_TICK_MS = 250
 
 export const SESSION_TOKEN_STORAGE_KEY = 'astryss:stardust:token'

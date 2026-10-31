@@ -6,8 +6,7 @@ import { animate, motion, useInView, useMotionValue, useTransform, type Animatio
 
 import { fetchTotalPixels } from '@/app/stardust/api/stardust.api'
 import { usePrefersReducedMotion } from '@/shared/hooks/use-prefers-reduced-motion'
-
-import StardustLiveMarker from './stardust-live-marker'
+import { cn } from '@/vendor/lib/utils'
 
 /** With the server's 30 s count cache, a new pixel shows up here within about 90 s. */
 const REFRESH_INTERVAL_MS = 60_000
@@ -22,13 +21,13 @@ function isOpaque(element: HTMLElement): boolean {
 
 /**
  * The live pixel total. It counts up from 0 once, as soon as any of it scrolls into view, then shows
- * each refreshed total directly. It is hidden only until the first total arrives; after that a
- * failed refresh keeps the last known total on screen.
+ * each refreshed total directly. Its footer space remains visible while the first request loads or
+ * fails; after a successful request, a failed refresh keeps the last known total on screen.
  */
 export default function StardustPixelCount({ className }: { className?: string }) {
   // react-query keeps the last total when a refresh fails. The interval pauses while the tab is
   // hidden, and the query refetches when it is shown again.
-  const { data: totalPixels } = useQuery({
+  const { data: totalPixels, isError } = useQuery({
     queryKey: ['stardust', 'stats'],
     queryFn: fetchTotalPixels,
     refetchInterval: REFRESH_INTERVAL_MS,
@@ -73,20 +72,30 @@ export default function StardustPixelCount({ className }: { className?: string }
   useEffect(() => () => countUpRef.current?.stop(), [])
 
   return (
-    <div ref={statRef} hidden={totalPixels === undefined} className={className}>
-      <span aria-hidden className="block h-1 w-16 bg-border" />
-      {/*
-        About 0.75x the headline: a fixed 48-56px on phones, then the md and lg headline sizes from
-        stardust-feature.tsx scaled down.
-      */}
-      <p className="mt-3 text-[clamp(3rem,14vw,3.5rem)] leading-none font-extrabold tracking-tighter tabular-nums md:text-[calc(min((100vw-2rem)/10.6,7rem)*0.75)] lg:text-[calc(var(--headline-size)*0.75)]">
-        {/* Screen readers get the settled total instead of every step of the count-up. */}
-        <motion.span aria-hidden>{shownText}</motion.span>
-        {totalPixels !== undefined && <span className="sr-only">{pixelCountFormat.format(totalPixels)}</span>}
-      </p>
-      <p className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-bold tracking-[0.14em] uppercase sm:text-xs sm:tracking-[0.2em]">
-        <StardustLiveMarker className="gap-1.5 text-[length:inherit] tracking-[inherit]" />
-        <span>Pixels placed by strangers</span>
+    <div
+      ref={statRef}
+      aria-live="polite"
+      className={cn('flex min-w-0 items-center gap-2.5', className)}
+    >
+      <span
+        aria-hidden
+        className={cn(
+          'size-3 shrink-0 bg-chart-4',
+          totalPixels === undefined && !isError && 'animate-pulse',
+          totalPixels === undefined && isError && 'bg-chart-3',
+        )}
+      />
+      <p className="leading-tight font-bold tabular-nums">
+        {totalPixels === undefined ? (
+          isError ? 'Live pixel count unavailable' : 'Loading live pixel count…'
+        ) : (
+          <>
+            {/* Screen readers get the settled total instead of every step of the count-up. */}
+            <motion.span aria-hidden>{shownText}</motion.span>
+            <span className="sr-only">{pixelCountFormat.format(totalPixels)}</span>
+            <span> pixels placed by strangers</span>
+          </>
+        )}
       </p>
     </div>
   )

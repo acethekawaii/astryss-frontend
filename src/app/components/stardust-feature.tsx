@@ -1,19 +1,18 @@
 'use client'
 
-import { useEffect, useRef, type CSSProperties, type RefObject } from 'react'
+import { useEffect, useRef, type RefObject } from 'react'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { inView, motion, useAnimationControls, type Variants } from 'motion/react'
 
 import { usePrefersReducedMotion } from '@/shared/hooks/use-prefers-reduced-motion'
 
-import StardustPixelCount from './stardust-pixel-count'
 import StardustTimelapse from './stardust-timelapse'
 
 const MotionLink = motion.create(Link)
 
-/** Entrance order on scroll-in: frame, headline, stat, button. */
-const ENTRANCE_ORDER = { frame: 0, headline: 1, stat: 2, button: 3 } as const
+/** Entrance order on scroll-in: frame first, then the copy from top to bottom. */
+const ENTRANCE_ORDER = { frame: 0, kicker: 1, headline: 2, body: 3, button: 4 } as const
 const ENTRANCE_STAGGER_SECONDS = 0.12
 const ENTRANCE_VISIBLE_AMOUNT = 0.2
 /** A section showing in more than this share of the screen at load is left as is, not hidden. */
@@ -31,34 +30,6 @@ const entrance: Variants = {
 /** The button presses halfway toward its shadow on hover and all the way in on press. */
 const PRESS_OFFSET_PX = 6
 const PRESS_SPRING = { type: 'spring', stiffness: 700, damping: 35 } as const
-
-/** The fixed site header is 6rem tall from md up; on desktop the section fits the screen below it. */
-const SITE_HEADER_HEIGHT = '6rem'
-/** Space kept free above and below the section when it fills the screen. */
-const SCREEN_BREATHING_ROOM = '3rem'
-const HEADLINE_LINE_HEIGHT = 0.95
-/** Matches lg:gap-x-10 and the 36/64 column split. */
-const COLUMN_GAP = '2.5rem'
-const COPY_COLUMN_SHARE = 0.36
-/** "together." is 4.95em wide with tracking-tighter; the rest is slack. */
-const LAST_LINE_WIDTH_EM = 5.2
-/** The frame's hard shadow hangs 14px below it. */
-const FRAME_SHADOW = '14px'
-/** Title bar (44px), caption strip (40px) and the 4px borders above, between and below them. */
-const FRAME_CHROME_HEIGHT = '100px'
-/** The frame's left and right 4px borders. */
-const FRAME_SIDE_BORDERS = '8px'
-
-/**
- * Desktop sizing, used by the lg: classes, in CSS so the server render already fits. The headline
- * shrinks on narrow or short screens, and the frame takes the largest 16:9 size that still fits the
- * screen's height under the headline's first line. `100cqw` is the grid's width.
- */
-const DESKTOP_SIZING = {
-  '--showcase-height': `calc(100svh - ${SITE_HEADER_HEIGHT} - ${SCREEN_BREATHING_ROOM})`,
-  '--headline-size': `min(7rem, (100cqw - ${COLUMN_GAP}) * ${COPY_COLUMN_SHARE} / ${LAST_LINE_WIDTH_EM}, var(--showcase-height) * 0.13)`,
-  '--frame-max-width': `calc((var(--showcase-height) - var(--headline-size) * ${HEADLINE_LINE_HEIGHT} - ${FRAME_SHADOW} - ${FRAME_CHROME_HEIGHT}) * 16 / 9 + ${FRAME_SIDE_BORDERS})`,
-} as CSSProperties
 
 /**
  * Hides the section's pieces while it is still (nearly) below the fold, then reveals them in order
@@ -109,11 +80,6 @@ function AddPixelButton({ prefersReducedMotion }: { prefersReducedMotion: boolea
   )
 }
 
-/**
- * The homepage Stardust showcase. Phones and tablets stack headline, frame, stat and button. From
- * lg up the headline's first line runs across the top, its last line sits beside the frame's top,
- * and the whole section fits one screen below the site header.
- */
 export default function StardustFeature() {
   const sectionRef = useRef<HTMLElement>(null)
   const prefersReducedMotion = usePrefersReducedMotion()
@@ -123,60 +89,63 @@ export default function StardustFeature() {
     <section
       ref={sectionRef}
       aria-labelledby="stardust-feature-heading"
-      className="main-container mt-16 mb-12 md:mt-28 md:mb-16"
+      className="main-container my-16 md:my-28"
     >
-      <div
-        style={DESKTOP_SIZING}
-        className="@container grid gap-8 lg:grid-cols-[minmax(0,36fr)_minmax(0,64fr)] lg:gap-x-10 lg:gap-y-0"
-      >
-        <motion.h2
-          id="stardust-feature-heading"
-          custom={ENTRANCE_ORDER.headline}
-          variants={entrance}
-          initial={false}
-          animate={controls}
-          // From lg up the negative margin lifts row 2 to the last line, so it sits beside the frame.
-          className="text-[calc((100vw-2rem)/5.6)] leading-[0.95] font-extrabold tracking-tighter [font-family:inherit] md:text-[min(calc((100vw-2rem)/10.6),7rem)] lg:col-span-2 lg:-mb-[0.95em] lg:text-(length:--headline-size)"
-        >
-          <span className="block md:inline">Draw on</span> <span className="block md:inline">the stars</span>{' '}
-          <span className="block">together.</span>
-        </motion.h2>
+      <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12 xl:gap-16">
+        <div className="flex min-w-0 flex-col items-start">
+          <motion.p
+            custom={ENTRANCE_ORDER.kicker}
+            variants={entrance}
+            initial={false}
+            animate={controls}
+            className="text-xs font-bold tracking-[0.22em] uppercase sm:text-sm"
+          >
+            A little pixel. A shared universe.
+          </motion.p>
+
+          <motion.h2
+            id="stardust-feature-heading"
+            custom={ENTRANCE_ORDER.headline}
+            variants={entrance}
+            initial={false}
+            animate={controls}
+            className="mt-5 text-[clamp(3.75rem,18vw,6rem)] leading-[0.88] font-extrabold tracking-tighter sm:text-[clamp(4.75rem,13vw,7rem)] lg:text-[clamp(4.5rem,6.5vw,6.5rem)]"
+          >
+            <span className="block">draw on</span>
+            <span className="block">the stars</span>
+            <span className="block">together.</span>
+          </motion.h2>
+
+          <motion.p
+            custom={ENTRANCE_ORDER.body}
+            variants={entrance}
+            initial={false}
+            animate={controls}
+            className="mt-6 max-w-lg md:mt-12 leading-relaxed"
+          >
+            One shared unmoderated canvas. No filters, no judgment—every pixel goes live for everyone to see.
+          </motion.p>
+
+          <motion.div
+            custom={ENTRANCE_ORDER.button}
+            variants={entrance}
+            initial={false}
+            animate={controls}
+            className="mt-8 lg:mt-10"
+          >
+            <AddPixelButton prefersReducedMotion={prefersReducedMotion} />
+          </motion.div>
+        </div>
 
         <motion.div
           custom={ENTRANCE_ORDER.frame}
           variants={entrance}
           initial={false}
           animate={controls}
-          className="min-w-0 lg:col-start-2 lg:row-start-2 lg:w-[min(100%,var(--frame-max-width))] lg:justify-self-end"
+          className="min-w-0 w-full"
         >
           <StardustTimelapse />
         </motion.div>
-
-        {/*
-          Stat, body, then button. From lg up the column fills the frame's height and two flexible
-          spacers center the group against the frame; the top one never gets shorter than the
-          headline's last line plus 48px.
-        */}
-        <div className="flex min-w-0 flex-col items-start lg:col-start-1 lg:row-start-2 lg:self-stretch">
-          <span aria-hidden className="hidden lg:block lg:min-h-[calc(var(--headline-size)*0.95+48px)] lg:flex-1" />
-          <motion.div
-            custom={ENTRANCE_ORDER.stat}
-            variants={entrance}
-            initial={false}
-            animate={controls}
-            // Collapses with the stat until the first count arrives, so it leaves no gap.
-            className="mb-4 has-[>[hidden]]:hidden lg:mb-10"
-          >
-            <StardustPixelCount />
-          </motion.div>
-          <p className="mb-8 max-w-md text-base leading-relaxed md:text-lg lg:mb-6">
-            One shared canvas. Place a pixel, and everyone sees it instantly.
-          </p>
-          <motion.div custom={ENTRANCE_ORDER.button} variants={entrance} initial={false} animate={controls}>
-            <AddPixelButton prefersReducedMotion={prefersReducedMotion} />
-          </motion.div>
-          <span aria-hidden className="hidden lg:block lg:flex-1" />
-        </div>
       </div>
     </section>
   )
