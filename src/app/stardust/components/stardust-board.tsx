@@ -15,7 +15,8 @@ import LiveStatus from './live-status'
 import PixelCanvas from './pixel-canvas'
 import PlacePanel from './place-panel'
 
-const PANEL_WIDTH = '14rem'
+/** Keeps six desktop swatches at the same size as the former four-column palette. */
+const PANEL_WIDTH = '20.25rem'
 const PANEL_GAP = '1.5rem'
 /** The frame's 4px border, on both sides. */
 const FRAME_BORDERS = '8px'
@@ -38,6 +39,7 @@ function frameSizing({ width, height }: { width: number; height: number }, pixel
   const widthForScreenHeight = `calc((100svh - var(--board-reserve)) * ${ratio} + ${FRAME_BORDERS})`
   const snapStep = pixelRatio ? `${width / pixelRatio}px` : '1px'
   return {
+    '--panel-width': PANEL_WIDTH,
     '--frame-max-width-stacked': `min(100cqw, max(${FRAME_MIN_WIDTH}, ${widthForScreenHeight}))`,
     '--frame-max-width-beside': `min(calc(100cqw - ${PANEL_WIDTH} - ${PANEL_GAP}), ${widthForScreenHeight})`,
     '--board-area-width-mobile': `calc(100cqw - ${FRAME_BORDERS})`,
@@ -49,7 +51,7 @@ function frameSizing({ width, height }: { width: number; height: number }, pixel
 
 export default function StardustBoard() {
   const [board] = useState(() => new BoardModel())
-  const { status, palette, boardSize, isReady } = useLiveBoard(board)
+  const { status, palette, paletteDisplayOrder, boardSize, isReady } = useLiveBoard(board)
   const pixelRatio = useDevicePixelRatio()
   const { isPlacing, placeSelectedPixel } = usePlacePixel(board)
   const [colorIndex, setColorIndex] = useState(DEFAULT_COLOR_INDEX)
@@ -63,12 +65,16 @@ export default function StardustBoard() {
     }
   }
 
+  const placeAtCell = (cell: Cell) => {
+    void placeSelectedPixel(cell, activeColorIndex)
+  }
+
   return (
     // The size container that `100cqw` in frameSizing refers to.
     <div className="@container">
       <div
         style={frameSizing(boardSize, pixelRatio)}
-        className="grid gap-3 [--board-area-width:var(--board-area-width-mobile)] [--board-reserve:23rem] [--frame-max-width:var(--frame-max-width-stacked)] md:[--board-area-width:var(--board-area-width-snapped)] md:[--board-reserve:22.5rem] xl:grid-cols-[var(--frame-width)_14rem] xl:justify-center xl:gap-x-6 xl:gap-y-4 xl:[--board-reserve:10rem] xl:[--frame-max-width:var(--frame-max-width-beside)]"
+        className="grid gap-3 [--board-area-width:var(--board-area-width-mobile)] [--board-reserve:23rem] [--frame-max-width:var(--frame-max-width-stacked)] md:[--board-area-width:var(--board-area-width-snapped)] md:[--board-reserve:22.5rem] xl:grid-cols-[var(--frame-width)_var(--panel-width)] xl:justify-center xl:gap-x-6 xl:gap-y-4 xl:[--board-reserve:10rem] xl:[--frame-max-width:var(--frame-max-width-beside)]"
       >
         <div className="contents xl:col-start-2 xl:row-start-1 xl:flex xl:h-(--frame-height) xl:min-h-0 xl:flex-col xl:gap-4">
           <header className="order-1 flex w-full max-w-(--frame-width) items-center justify-between gap-3 justify-self-center xl:flex-col xl:items-start">
@@ -84,7 +90,12 @@ export default function StardustBoard() {
             aria-label="Paint"
             className="order-4 flex w-full max-w-(--frame-width) flex-col gap-3 self-start justify-self-center rounded-base border-2 border-border bg-secondary-background p-3 shadow-shadow xl:min-h-0 xl:flex-1 xl:gap-4 xl:self-stretch xl:overflow-y-auto xl:p-4"
           >
-            <ColorPicker palette={palette} selectedIndex={activeColorIndex} onSelect={setColorIndex} />
+            <ColorPicker
+              palette={palette}
+              displayOrder={paletteDisplayOrder}
+              selectedIndex={activeColorIndex}
+              onSelect={setColorIndex}
+            />
             <PlacePanel
               selectedCell={selectedCell}
               color={palette[activeColorIndex]}
@@ -101,6 +112,7 @@ export default function StardustBoard() {
           selectedCell={selectedCell}
           selectedColor={palette[activeColorIndex]}
           onSelectCell={setSelectedCell}
+          onPlaceCell={placeAtCell}
           className="order-2 h-(--frame-height) w-(--frame-width) justify-self-center xl:col-start-1 xl:row-start-1"
         />
 

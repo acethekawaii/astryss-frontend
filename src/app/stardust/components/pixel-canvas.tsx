@@ -17,6 +17,7 @@ interface PixelCanvasProps {
   selectedCell: Cell | null
   selectedColor: string
   onSelectCell: (cell: Cell) => void
+  onPlaceCell: (cell: Cell) => void
   /** Must give the frame its size; the layout matches it to the board's aspect ratio. */
   className?: string
 }
@@ -29,18 +30,23 @@ export default function PixelCanvas({
   selectedCell,
   selectedColor,
   onSelectCell,
+  onPlaceCell,
   className,
 }: PixelCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const viewportRef = useRef<BoardViewport | null>(null)
   const selectCell = useEffectEvent((cell: Cell) => onSelectCell(cell))
+  const placeCell = useEffectEvent((cell: Cell) => onPlaceCell(cell))
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) {
       return
     }
-    const viewport = new BoardViewport(canvas, board, { onSelectCell: (cell) => selectCell(cell) })
+    const viewport = new BoardViewport(canvas, board, {
+      onSelectCell: (cell) => selectCell(cell),
+      onPlaceCell: (cell) => placeCell(cell),
+    })
     viewportRef.current = viewport
     return () => {
       viewport.destroy()
@@ -64,7 +70,7 @@ export default function PixelCanvas({
         tabIndex={0}
         role="application"
         aria-roledescription="pixel board"
-        aria-label="Stardust board. Drag to pan, pinch or scroll to zoom, and tap a pixel to select it. Keyboard: arrow keys move the selection, plus and minus zoom, zero shows the whole board."
+        aria-label="Stardust board. Click or tap a pixel to select it, then double-click or double-tap to place it. Drag to pan, and pinch or scroll to zoom. Keyboard: arrow keys move the selection, Enter places it, plus and minus zoom, zero shows the whole board."
         className="absolute inset-0 size-full cursor-crosshair touch-none select-none outline-none [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none]"
       />
       {/* Soft inner shadow: the board reads as sitting just below the frame's edge. */}

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { DEFAULT_BOARD_SIZE, DEFAULT_PALETTE } from '../constants/stardust.constants'
 import type { BoardModel } from '../lib/board-model'
 import { LiveBoardSync } from '../lib/live-board-sync'
-import type { ConnectionStatus } from '../types/stardust.types'
+import type { ConnectionStatus, PaletteDisplayOrder } from '../types/stardust.types'
 
 interface BoardSize {
   width: number
@@ -14,14 +14,21 @@ interface BoardSize {
 export function useLiveBoard(board: BoardModel) {
   const [status, setStatus] = useState<ConnectionStatus>('connecting')
   const [palette, setPalette] = useState<readonly string[]>(DEFAULT_PALETTE)
+  const [paletteDisplayOrder, setPaletteDisplayOrder] = useState<PaletteDisplayOrder>()
   const [boardSize, setBoardSize] = useState<BoardSize>(DEFAULT_BOARD_SIZE)
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
     const sync = new LiveBoardSync(board, {
       onStatusChange: setStatus,
-      onSnapshot: ({ palette: snapshotPalette, width, height }) => {
+      onSnapshot: ({
+        palette: snapshotPalette,
+        paletteDisplayOrder: snapshotDisplayOrder,
+        width,
+        height,
+      }) => {
         setPalette(snapshotPalette)
+        setPaletteDisplayOrder(snapshotDisplayOrder)
         setBoardSize((current) =>
           current.width === width && current.height === height ? current : { width, height },
         )
@@ -32,5 +39,5 @@ export function useLiveBoard(board: BoardModel) {
     return () => sync.stop()
   }, [board])
 
-  return { status, palette, boardSize, isReady }
+  return { status, palette, paletteDisplayOrder, boardSize, isReady }
 }

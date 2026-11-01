@@ -38,6 +38,14 @@ import {
 
 interface BoardViewportOptions {
   onSelectCell: (cell: Cell) => void
+  onPlaceCell: (cell: Cell) => void
+}
+
+interface RecentTap {
+  cell: Cell
+  point: Point
+  pointerType: string
+  timestamp: number
 }
 
 interface PinchGesture {
@@ -58,6 +66,9 @@ const RETICLE_COLOR = '#000000'
 const RETICLE_HALO_COLOR = '#FFFFFF'
 const WHEEL_LINE_HEIGHT_PX = 16
 const KEYBOARD_FAST_STEP = 10
+/** Two taps this close together count as the direct-placement shortcut. */
+const DOUBLE_TAP_MAX_DELAY_MS = 500
+const DOUBLE_TAP_SLOP_PX = 12
 
 function distance(a: Point, b: Point): number {
   return Math.hypot(a.x - b.x, a.y - b.y)
@@ -85,8 +96,8 @@ function preventDefault(event: Event) {
  * input into pan, zoom and selection.
  *
  * A press becomes a tap (a selection) only when it never travels past TAP_SLOP_PX and no second
- * finger joins it. Panning or pinching therefore never selects anything, and selecting never
- * places anything: placing is a separate, explicit action outside the canvas.
+ * finger joins it. Panning or pinching therefore never selects anything. A second tap in the same
+ * spot places the cell from the first tap, which keeps the target stable if that first tap zoomed.
  */
 export class BoardViewport {
   private camera: Camera = { scale: 1, x: 0, y: 0 }
@@ -101,6 +112,7 @@ export class BoardViewport {
   private animationRequest = 0
   private wheelSettleTimer: number | undefined
   private lastPinchFocus: Point | null = null
+  private recentTap: RecentTap | null = null
   private readonly resizeObserver: ResizeObserver
   private readonly unsubscribeBoard: () => void
   private readonly reducedMotion: MediaQueryList
@@ -284,6 +296,7 @@ export class BoardViewport {
         return
       }
       // Pan from the press origin so the board stays glued to the finger.
+      this.recentTap = null
       this.gesture = { kind: 'pan', pointerId: event.pointerId, last: gesture.start }
       this.updateCursor()
     }
@@ -336,6 +349,7 @@ export class BoardViewport {
 
   private startPinch() {
     const [first, second] = [...this.pointers.values()]
+    this.recentTap = null
     this.gesture = {
       kind: 'pinch',
       startDistance: Math.max(1, distance(first, second)),
@@ -355,8 +369,26 @@ export class BoardViewport {
     const target = screenToBoard(this.camera, point)
     const cell = { x: Math.floor(target.x), y: Math.floor(target.y) }
     if (!this.board.contains(cell.x, cell.y)) {
+      this.recentTap = null
       return
     }
+
+    const timestamp = performance.now()
+    const previousTap = this.recentTap
+    const isDoubleTap =
+      previousTap !== null &&
+      previousTap.pointerType === pointerType &&
+      timestamp - previousTap.timestamp <= DOUBLE_TAP_MAX_DELAY_MS &&
+      distance(previousTap.point, point) <= DOUBLE_TAP_SLOP_PX
+
+    if (isDoubleTap) {
+      this.recentTap = null
+      this.select(previousTap.cell)
+      this.options.onPlaceCell(previousTap.cell)
+      return
+    }
+
+    this.recentTap = { cell, point, pointerType, timestamp }
     this.select(cell)
     const zoomThreshold = pointerType === 'touch' ? TOUCH_TAP_ZOOM_THRESHOLD : MOUSE_TAP_ZOOM_THRESHOLD
     if (this.camera.scale < zoomThreshold) {

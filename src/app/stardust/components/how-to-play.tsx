@@ -53,13 +53,17 @@ export default function HowToPlay() {
           <div>
             <dt className="font-bold">How do I draw?</dt>
             <dd className="mt-1">
-              Pick a color, tap a pixel, then hit Place (or press Enter on desktop). Drag to move around, and scroll
-              or pinch to zoom.
+              Pick a color, then double-click or double-tap a pixel to place it. You can also select a pixel and hit
+              Place (or press Enter on desktop). Drag to move around, and scroll or pinch to zoom.
             </dd>
           </div>
           <div>
             <dt className="font-bold">How do I erase?</dt>
             <dd className="mt-1">Paint over it with white. That&apos;s the eraser.</dd>
+          </div>
+          <div>
+            <dt className="font-bold">Can I overwrite someone&apos;s drawing?</dt>
+            <dd className="mt-1">Griefing is allowed. It&apos;s your life anyway.</dd>
           </div>
           <div>
             <dt className="font-bold">Why can&apos;t I place right now?</dt>

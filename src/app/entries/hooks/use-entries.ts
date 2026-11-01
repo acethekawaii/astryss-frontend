@@ -1,5 +1,4 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
 
 import { createEntry, getEntries, getEntry } from "../api/entries.api";
 import { EntriesResponse } from "../types/entry.types";
@@ -40,6 +39,7 @@ export function useEntries(options: UseEntriesOptions = {}) {
   });
 }
 
+/** Success and failure feedback belongs to the caller, so raw server messages never reach writers. */
 export function useCreateEntry() {
   const queryClient = useQueryClient();
 
@@ -50,12 +50,6 @@ export function useCreateEntry() {
         queryKey: ["entries"],
         refetchType: "all",
       });
-      
-      toast.success("Your message has been sent to the stars! ✨");
-    },
-    onError: (error: Error) => {
-      toast.error(error.message || "Failed to send your message");
-      console.log(error);
     },
   });
 }

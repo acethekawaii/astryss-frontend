@@ -8,6 +8,7 @@ import * as motion from "motion/react-client";
 import { getEntries } from '@/app/entries/api/entries.api';
 import ReleaseSample from '@/app/release/components/release-samples';
 import WordCounterBox from '@/app/release/components/word-counter-box';
+import { RELEASES_FEED_PATH } from '@/app/release/constants/release.constants';
 import Typewriter from '@/vendor/fancy/text/typewriter';
 import { Button } from '@/vendor/ui/button';
 
@@ -68,9 +69,11 @@ export default async function ReleasePage() {
 
       <ReleaseSample initialEntries={entries} />
 
-      <Link href="/entries" className="flex justify-center mt-8">
-        <Button variant="neutral" className="cursor-pointer">Read More Entries</Button>
-      </Link>
+      <div className="flex justify-center mt-8">
+        <Button asChild variant="neutral" className="cursor-pointer">
+          <Link href={RELEASES_FEED_PATH}>See what others released.</Link>
+        </Button>
+      </div>
     </main>
   )
 }

@@ -1,10 +1,22 @@
-/** Palette from the Stardust API note, in index order. Board snapshots carry the live palette. */
+import type { PaletteDisplayOrder } from '../types/stardust.types'
+
+/** Palette from the Stardust API note, in storage/index order. Board snapshots carry the live palette. */
 export const DEFAULT_PALETTE: readonly string[] = [
   '#FFFFFF', '#E4E4E4', '#888888', '#222222',
   '#FFA7D1', '#E50000', '#E59500', '#A06A42',
   '#E5D900', '#94E044', '#02BE01', '#00D3DD',
   '#0083C7', '#0000EA', '#CF6EE4', '#820080',
+  '#FFF9EC', '#D7F6FD', '#FFEBF5', '#A8A9DB',
+  '#880015', '#FF94AC', '#FAFFA3', '#FFC90E',
 ]
+
+/** Human-friendly picker order. Placement and pixel data continue to use `DEFAULT_PALETTE` indexes. */
+export const DEFAULT_PALETTE_DISPLAY_ORDER = [
+  '#FFFFFF', '#FFF9EC', '#E4E4E4', '#888888', '#222222', '#FFEBF5',
+  '#FFA7D1', '#FF94AC', '#E50000', '#880015', '#FAFFA3', '#E5D900',
+  '#FFC90E', '#E59500', '#A06A42', '#94E044', '#02BE01', '#D7F6FD',
+  '#00D3DD', '#0083C7', '#0000EA', '#A8A9DB', '#CF6EE4', '#820080',
+] as const satisfies PaletteDisplayOrder
 
 export const COLOR_NAMES: Readonly<Record<string, string>> = {
   '#FFFFFF': 'White',
@@ -23,8 +35,17 @@ export const COLOR_NAMES: Readonly<Record<string, string>> = {
   '#0000EA': 'Indigo',
   '#CF6EE4': 'Lavender',
   '#820080': 'Purple',
+  '#FFF9EC': 'Floral White',
+  '#D7F6FD': 'Ice Blue',
+  '#FFEBF5': 'Lavender Blush',
+  '#A8A9DB': 'Periwinkle Blue',
+  '#880015': 'Dark Red',
+  '#FF94AC': 'Rose',
+  '#FAFFA3': 'Light Yellow',
+  '#FFC90E': 'Gold',
 }
 
+/** Red's storage index, independent of its position in the picker. */
 export const DEFAULT_COLOR_INDEX = 5
 
 /** Board size used to shape the frame before the first snapshot arrives (the snapshot is authoritative). */

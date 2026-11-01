@@ -3,12 +3,23 @@ export interface Cell {
   y: number
 }
 
+/** Hex colors in the order users should encounter them in the picker. */
+export type PaletteDisplayOrder = readonly string[]
+
+/** A displayed swatch paired with the storage index sent to the placement API. */
+export interface PaletteSwatch {
+  hex: string
+  paletteIndex: number
+}
+
 export interface BoardSnapshot {
   width: number
   height: number
   seq: number
   /** `#RRGGBB` colors, indexed by the values in `pixels`. */
   palette: string[]
+  /** Optional API-provided picker order. Colors are matched back to `palette` by hex. */
+  paletteDisplayOrder?: PaletteDisplayOrder
   /** One palette index per cell, row by row. */
   pixels: Uint8Array
 }
