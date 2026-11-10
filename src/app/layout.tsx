@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { Toaster } from "@/vendor/ui/sonner"
 
 import ReactQueryProvider from "@/shared/providers/react-query-provider";
+import PageViewTracker from "@/app/site-stats/components/page-view-tracker";
 import Header from "@/shared/components/navigation-menu";
 import Footer from "@/shared/components/footer";
 // import Footer from "@/shared/components/footer";
@@ -55,6 +56,7 @@ export default async function RootLayout({
           <Header />
           {children}
           <Analytics />
+          <PageViewTracker />
           <Footer />
           <Toaster />
         </ReactQueryProvider>

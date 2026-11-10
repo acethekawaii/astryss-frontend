@@ -9,6 +9,7 @@ import { Button } from "@/vendor/ui/button";
 
 import Timeline from "@/app/components/timeline";
 import StardustFeature from "@/app/components/stardust-feature";
+import SiteVisits from "@/app/site-stats/components/site-visits";
 import Astronaut from "@/assets/astronaut.png";
 import AboutHero from "@/assets/about-hero-bg.png";
 import RandomLetterSwapForward from "@/vendor/fancy/text/random-letter-swap-forward-anim";
@@ -142,6 +143,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <SiteVisits className="main-container mt-12 md:mt-16" />
 
       <StardustFeature />
 
