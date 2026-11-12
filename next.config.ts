@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    optimizePackageImports: ["@icons-pack/react-simple-icons"],
+  },
   images: {
     remotePatterns: [
       {

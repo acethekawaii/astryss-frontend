@@ -7,10 +7,10 @@ import {
   DialogHeader, 
   DialogTitle,
   DialogDescription,
-} from "@/vendor/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/vendor/ui/form";
-import { Button } from "@/vendor/ui/button";
-import { Input } from "@/vendor/ui/input";
+} from "@/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'

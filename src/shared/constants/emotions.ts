@@ -11,7 +11,7 @@ export const EMOTION_LABELS: Record<Emotion, string> = {
   sad: 'Sad',
   angry: 'Angry',
   inlove: 'In love',
-  other: 'Mixed feelings',
+  other: 'Mixed',
 };
 
 export const EMOTION_STYLES: Record<Emotion, string> = {

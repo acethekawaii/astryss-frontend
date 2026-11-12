@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { createEntry, getEntries, getEntry } from "../api/entries.api";
+import type { CreateEntryInput } from "../schema/entry.schema";
 import { EntriesResponse } from "../types/entry.types";
 import { Emotion } from "../../../shared/constants/emotions";
 import { EntryType } from "../../../shared/constants/entry-type";
@@ -44,7 +45,7 @@ export function useCreateEntry() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: createEntry,
+    mutationFn: (input: CreateEntryInput) => createEntry(input),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["entries"],

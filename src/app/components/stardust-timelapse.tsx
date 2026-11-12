@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight, Pause, Play } from 'lucide-react'
 
-import { cn } from '@/vendor/lib/utils'
+import { cn } from '@/lib/utils'
 import { usePrefersReducedMotion } from '@/shared/hooks/use-prefers-reduced-motion'
 
 import StardustLiveMarker from './stardust-live-marker'

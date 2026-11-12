@@ -1,11 +1,7 @@
 "use client";
 
-import { Button } from "@/vendor/ui/button";
-import { Facebook, Twitter } from "lucide-react";
-import { 
-  FacebookShareButton, 
-  TwitterShareButton 
-} from "react-share";
+import { SiFacebook, SiX } from "@icons-pack/react-simple-icons";
+import { FacebookShareButton, XShareButton } from "react-share";
 
 type ShareButtonsProps = {
   url: string;
@@ -14,24 +10,26 @@ type ShareButtonsProps = {
 };
 
 export default function ShareButtons({ url, title, description }: ShareButtonsProps) {
+  const shareText = description ? `${title} — ${description}` : title;
+
   return (
     <div className="flex gap-4 items-center">
-      <TwitterShareButton
+      <XShareButton
         url={url}
-        title={title}
+        text={shareText}
         via="astryss"
       >
         <div className="cursor-pointer rounded-base bg-main px-3 py-2 border-2 border-border">
-          <Twitter />
+          <SiX size={24} aria-hidden />
         </div>
-      </TwitterShareButton>
+      </XShareButton>
 
       <FacebookShareButton
         url={url}
         hashtag="#astryss"
       >
         <div className="cursor-pointer rounded-base bg-main px-3 py-2 border-2 border-border">
-          <Facebook />
+          <SiFacebook size={24} aria-hidden />
         </div>
       </FacebookShareButton>
     </div>

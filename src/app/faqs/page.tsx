@@ -5,7 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/vendor/ui/accordion";
+} from "@/components/ui/accordion";
 
 type FaqEntry = { id: number; question: string; answer: string };
 
@@ -48,8 +48,6 @@ export default function Home() {
         </div>
 
         <Accordion
-          type="single"
-          collapsible
           className="min-w-0 w-full space-y-4 md:col-start-2 md:row-start-1 md:row-span-2"
         >
           {FAQS.map((faq) => (

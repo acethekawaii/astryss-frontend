@@ -3,8 +3,8 @@
 import { useEffect, useEffectEvent, useRef } from 'react'
 import { LoaderCircle, Maximize, Minus, Plus } from 'lucide-react'
 
-import { cn } from '@/vendor/lib/utils'
-import { Button } from '@/vendor/ui/button'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
 import { ZOOM_STEP } from '../constants/stardust.constants'
 import type { BoardModel } from '../lib/board-model'

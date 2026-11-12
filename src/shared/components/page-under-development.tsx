@@ -1,5 +1,4 @@
-import { Button } from "@/vendor/ui/button";
-import { Pointer } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,10 +14,8 @@ export default function PageUnderDevelopment() {
         height={500} 
         className="md:w-1/2 mx-auto border-4 border-border"
       />
-      <Link href="/release">
-        <Button className="cursor-pointer">
-          Check out Release
-        </Button>
+      <Link href="/release" className={buttonVariants({ className: "cursor-pointer" })}>
+        Check out Release
       </Link>
     </div>
   )

@@ -4,7 +4,7 @@ import "./globals.css";
 
 import { Analytics } from '@vercel/analytics/react'
 
-import { Toaster } from "@/vendor/ui/sonner"
+import { Toaster } from "@/components/ui/toast"
 
 import ReactQueryProvider from "@/shared/providers/react-query-provider";
 import PageViewTracker from "@/app/site-stats/components/page-view-tracker";
@@ -51,7 +51,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en"> 
-      <body className={`${jetbrains.className} ${spaceGrotesk.className} ${interTight.variable} antialiased`}>
+      <body className={`${jetbrains.className} ${spaceGrotesk.className} ${interTight.variable} relative isolate antialiased`}>
         <ReactQueryProvider>
           <Header />
           {children}

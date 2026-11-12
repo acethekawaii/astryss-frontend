@@ -1,14 +1,12 @@
 import { useRef, useState } from 'react'
-import { toast } from 'sonner'
+
+import { toast } from '@/components/ui/toast'
 
 import { placePixel } from '../api/stardust.api'
 import type { BoardModel } from '../lib/board-model'
 import { isCoolingDown, startCooldown } from '../lib/cooldown-store'
 import { getSessionToken, renewSessionToken } from '../lib/session-token'
 import type { Cell, PlacementOutcome } from '../types/stardust.types'
-
-// The palette and Place button live at the bottom of the screen on phones; keep toasts off them.
-const TOAST_OPTIONS = { position: 'top-center' } as const
 
 /** Sends the placement, minting a fresh token once if the stored one is rejected. */
 async function submitPlacement(cell: Cell, color: number): Promise<PlacementOutcome> {
@@ -49,14 +47,20 @@ export function usePlacePixel(board: BoardModel) {
       optimisticPixel.rollback()
       if (outcome.kind === 'cooldown') {
         startCooldown(outcome.remainingMs)
-        toast.warning('Still cooling down. Your next pixel unlocks when the timer ends.', TOAST_OPTIONS)
+        toast.add({
+          type: 'warning',
+          title: 'Still cooling down. Your next pixel unlocks when the timer ends.',
+        })
       } else if (outcome.kind === 'failed') {
-        toast.error(outcome.message, TOAST_OPTIONS)
+        toast.add({ type: 'error', title: outcome.message })
       }
     } catch (error) {
       optimisticPixel.rollback()
       console.error('[stardust] Placing a pixel failed', error)
-      toast.error("Couldn't reach Stardust. Check your connection and try again.", TOAST_OPTIONS)
+      toast.add({
+        type: 'error',
+        title: "Couldn't reach Stardust. Check your connection and try again.",
+      })
     } finally {
       inFlightRef.current = false
       setIsPlacing(false)

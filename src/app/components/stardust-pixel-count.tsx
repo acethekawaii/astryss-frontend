@@ -6,7 +6,7 @@ import { animate, motion, useInView, useMotionValue, useTransform, type Animatio
 
 import { fetchTotalPixels } from '@/app/stardust/api/stardust.api'
 import { usePrefersReducedMotion } from '@/shared/hooks/use-prefers-reduced-motion'
-import { cn } from '@/vendor/lib/utils'
+import { cn } from '@/lib/utils'
 
 /** With the server's 30 s count cache, a new pixel shows up here within about 90 s. */
 const REFRESH_INTERVAL_MS = 60_000

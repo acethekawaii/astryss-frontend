@@ -52,7 +52,19 @@ export async function getEntries(
   }
 }
 
-export async function createEntry(data: CreateEntryInput): Promise<ApiResponse<CreateEntryDTO>> {
+type CreateEntryOptions = {
+  /**
+   * Lets the request outlive the page, for a send that starts while the tab is closing. Browsers
+   * cap keepalive bodies at 64 KiB, so callers only ask for it when the body fits.
+   */
+  keepalive?: boolean;
+};
+
+/** Starts the request synchronously, so it is already on its way when this returns. */
+export async function createEntry(
+  data: CreateEntryInput,
+  { keepalive = false }: CreateEntryOptions = {},
+): Promise<ApiResponse<CreateEntryDTO>> {
   const formData = new FormData();
 
   if (data.displayName) {
@@ -79,6 +91,7 @@ export async function createEntry(data: CreateEntryInput): Promise<ApiResponse<C
   const response = await fetch(`${API_CONFIG.BASE_URL}/entries`, {
     method: "POST",
     body: formData,
+    keepalive,
   });
 
   if (!response.ok) {

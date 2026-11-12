@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { Button } from "@/vendor/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
@@ -10,11 +10,9 @@ export default function NotFound() {
       <p className="mb-8 max-w-md text-lg opacity-75">
         The entry you're looking for doesn't exist or may have been removed.
       </p>
-      <Link href="/entries">
-        <Button variant="default">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Entries
-        </Button>
+      <Link href="/entries" className={buttonVariants()}>
+        <ArrowLeft className="mr-2 h-4 w-4" />
+        Back to Entries
       </Link>
     </main>
   );

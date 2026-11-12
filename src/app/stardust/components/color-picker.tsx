@@ -2,7 +2,7 @@
 
 import { KeyboardEvent, useRef } from 'react'
 
-import { cn } from '@/vendor/lib/utils'
+import { cn } from '@/lib/utils'
 
 import { COLOR_NAMES, DEFAULT_PALETTE_DISPLAY_ORDER } from '../constants/stardust.constants'
 import type { PaletteDisplayOrder, PaletteSwatch } from '../types/stardust.types'

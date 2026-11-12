@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { BookOpen, ChevronDown } from 'lucide-react'
 import { motion, useReducedMotion } from 'motion/react'
 
-import { cn } from '@/vendor/lib/utils'
+import { cn } from '@/lib/utils'
 
 import { FALLBACK_COOLDOWN_MS } from '../constants/stardust.constants'
 

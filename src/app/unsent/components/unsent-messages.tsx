@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Emotion, EMOTIONS } from "@/shared/constants/emotions";
 import { motion } from "motion/react";
-import { cn } from "@/vendor/lib/utils";
+import { cn } from "@/lib/utils";
 
 const MOCK_ENTRIES: any[] = [
   {

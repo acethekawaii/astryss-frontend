@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 import * as motion from "motion/react-client";
 
-import { Card } from "@/vendor/ui/card";
+import { Card } from "@/components/ui/card";
 
 import ReleaseMessages from "./components/release-messages";
 import { getEntries } from "@/app/entries/api/entries.api";

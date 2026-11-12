@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 import * as motion from "motion/react-client";
 
-import { Card } from "@/vendor/ui/card";
+import { Card } from "@/components/ui/card";
 import PageUnderDevelopment from "@/shared/components/page-under-development";
 
 export const metadata: Metadata = {

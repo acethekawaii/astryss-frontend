@@ -2,8 +2,8 @@
 
 import { useEffect, useEffectEvent, useRef } from 'react'
 
-import { cn } from '@/vendor/lib/utils'
-import { Button } from '@/vendor/ui/button'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
 import { useCooldown } from '../hooks/use-cooldown'
 import type { Cell } from '../types/stardust.types'

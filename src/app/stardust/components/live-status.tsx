@@ -1,4 +1,4 @@
-import { cn } from '@/vendor/lib/utils'
+import { cn } from '@/lib/utils'
 
 import type { ConnectionStatus } from '../types/stardust.types'
 

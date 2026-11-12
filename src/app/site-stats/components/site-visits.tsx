@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 
-import { cn } from '@/vendor/lib/utils'
+import { cn } from '@/lib/utils'
 
 import { fetchVisitSummary } from '../api/site-stats.api'
 import { formatCompactCount, formatFullCount } from '../lib/format-count'

@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 
-import { cn } from "@/vendor/lib/utils";
+import { cn } from "@/lib/utils";
 
 import { CONTENT_LIMIT, COUNTER_VISIBLE_FROM } from "../constants/release.constants";
 

@@ -4,11 +4,11 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(96.79% 0.0654 102.26);
+  --background: hsl(54, 92%, 88%);
   --secondary-background: oklch(100% 0 0);
   --foreground: oklch(0% 0 0);
   --main-foreground: oklch(0% 0 0);
-  --main: oklch(86.03% 0.176 92.36);
+  --main: hsl(49, 100%, 49%);
   --accent: oklch(0.1323 0.0894 266.7);
   --text-900: #0B161E;
   --text-600: #365261;
@@ -69,16 +69,38 @@
   --shadow-shadow: var(--shadow);
   --font-weight-base: 500;
   --font-weight-heading: 700;
+  --animate-marquee: marquee 5s linear infinite;
+  --animate-marquee2: marquee2 5s linear infinite;
+  --color-chart-active-dot: var(--chart-active-dot);
+  --shadow: var(--shadow);
+  @keyframes marquee {
+  0% {
+    transform: translateX(0%);
+    }
+  100% {
+    transform: translateX(-100%);
+    }
+  }
+  @keyframes marquee2 {
+  0% {
+    transform: translateX(100%);
+    }
+  100% {
+    transform: translateX(0%);
+    }
+  }
 }
 
 @layer base { 
   body {
     @apply text-foreground font-base bg-background;
-    color: var(--color-text-900);
+    color: var(--foreground);
+    font-weight: var(--font-weight-base);
   }
 
   h1, h2, h3, h4, h5, h6{
     font-family: 'Space Grotesk', sans-serif;
+    font-weight: var(--font-weight-heading);
   }
 }
 
@@ -90,4 +112,23 @@
 
 .main-container {
   @apply px-4 mx-auto max-w-7xl w-full;
+}
+  body, .scrollbar {
+    --sb-track-color: #ffffff;
+    --sb-thumb-color: #000000;
+}
+  .scrollbar::-webkit-scrollbar {
+    width: 16px;
+}
+  .scrollbar::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+}
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .scrollbar {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
 }

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "motion/react"
 import { formatDistanceToNow, format } from 'date-fns';
 
-import { Button } from "@/vendor/ui/button";
+import { Button } from "@/components/ui/button";
 
 import { Emotion, EMOTIONS, EMOTION_LABELS } from "@/shared/constants/emotions";
 import { EntriesResponse, Entry } from "@/app/entries/types/entry.types";

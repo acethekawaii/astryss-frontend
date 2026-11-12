@@ -5,3 +5,86 @@
 textarea {
   box-shadow: none !important;
 }
+
+.release-page {
+  /* Height of the fixed site header, which floats over the top of the page. */
+  --release-header: 4.5rem;
+  --release-gutter: 0.75rem;
+  /* Room for the card's hard shadow below and to the right. */
+  --release-shadow: 4px;
+}
+
+@media (min-width: 768px) {
+  .release-page {
+    --release-header: 6rem;
+    --release-gutter: 1.5rem;
+  }
+}
+
+/* Deep navy, with a faint glow along the horizon. Mood washes fade in over it. */
+.release-sky {
+  background:
+    radial-gradient(90% 55% at 50% 105%, rgba(46, 52, 140, 0.5), transparent 70%),
+    radial-gradient(60% 40% at 15% 0%, rgba(30, 24, 90, 0.45), transparent 70%),
+    linear-gradient(180deg, #01002b 0%, #050838 55%, #0b1150 100%);
+}
+
+/*
+ * The first screen: the intro and the release card. The card never runs past the bottom of the
+ * screen; the message box inside it gives up height instead (see ReleaseForm).
+ */
+.release-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 100dvh;
+  padding-top: calc(var(--release-header) + var(--release-gutter));
+  padding-bottom: calc(var(--release-gutter) + var(--release-shadow));
+}
+
+.release-slot {
+  min-height: 0;
+  max-height: calc(100dvh - var(--release-header) - 2 * var(--release-gutter) - var(--release-shadow));
+}
+
+/* Short phones: the card comes first and the intro follows it, just below the fold. */
+.release-hero {
+  flex-shrink: 0;
+  order: 1;
+}
+
+/* Tall enough for both: the intro sits above the card, and the card fills the height that's left. */
+@media (min-height: 840px) {
+  .release-stage {
+    height: 100dvh;
+  }
+
+  .release-hero {
+    order: 0;
+  }
+
+  .release-slot {
+    flex-grow: 1;
+  }
+}
+
+/* Wide screens: intro on the left, card on the right. */
+@media (min-width: 1024px) {
+  .release-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 34rem);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: center;
+    column-gap: 4rem;
+    height: 100dvh;
+  }
+
+  .release-hero {
+    order: 0;
+  }
+
+  /* A writing space with some presence, without towering over a large screen. */
+  .release-slot {
+    min-height: min(36rem, 100%);
+  }
+}

@@ -2,7 +2,7 @@
 
 import { motion, type Transition } from 'motion/react'
 
-import { cn } from '@/vendor/lib/utils'
+import { cn } from '@/lib/utils'
 import { usePrefersReducedMotion } from '@/shared/hooks/use-prefers-reduced-motion'
 
 /** A hard on/off blink rather than a fade. */

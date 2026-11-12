@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowRight, Eye, PenLine, Sparkles } from "lucide-react";
 
-import { Button } from "@/vendor/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 import { RELEASES_FEED_PATH } from "../constants/release.constants";
 
@@ -37,23 +37,25 @@ export default function ReleaseSuccess({ entryId, headingRef, revealDelay, onWri
 
       <div className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:justify-center">
         {entryId && (
-          <Button asChild className="cursor-pointer">
-            <Link href={`/entries/${encodeURIComponent(entryId)}`}>
-              View message
-              <Eye aria-hidden />
-            </Link>
-          </Button>
+          <Link
+            href={`/entries/${encodeURIComponent(entryId)}`}
+            className={buttonVariants({ className: "cursor-pointer" })}
+          >
+            View message
+            <Eye aria-hidden />
+          </Link>
         )}
         <Button type="button" variant="neutral" onClick={onWriteAnother} className="cursor-pointer">
           Write another
           <PenLine aria-hidden />
         </Button>
-        <Button asChild variant="neutral" className="cursor-pointer">
-          <Link href={RELEASES_FEED_PATH}>
-            Browse releases
-            <ArrowRight aria-hidden />
-          </Link>
-        </Button>
+        <Link
+          href={RELEASES_FEED_PATH}
+          className={buttonVariants({ variant: "neutral", className: "cursor-pointer" })}
+        >
+          Browse releases
+          <ArrowRight aria-hidden />
+        </Link>
       </div>
     </div>
   );

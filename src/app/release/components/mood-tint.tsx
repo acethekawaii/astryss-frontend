@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 
 import type { Emotion } from "@/shared/constants/emotions";
-import { cn } from "@/vendor/lib/utils";
+import { cn } from "@/lib/utils";
 
 import { MOOD_ATMOSPHERES } from "../constants/mood-atmospheres";
 

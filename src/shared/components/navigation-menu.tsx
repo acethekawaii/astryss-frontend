@@ -10,10 +10,11 @@ import {
   NavigationMenuList, 
   NavigationMenuTrigger, 
   navigationMenuTriggerStyle
-} from "@/vendor/ui/navigation-menu"
-import { Button } from "@/vendor/ui/button";
+} from "@/components/ui/navigation-menu"
+import { Button, buttonVariants } from "@/components/ui/button";
 
-import { Menu,Github, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { SiGithub } from "@icons-pack/react-simple-icons";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 
@@ -63,15 +64,13 @@ export default function Header() {
       <header 
         className={`px-4 w-full py-4 fixed top-0 flex justify-between md:justify-center items-center gap-3 lg:gap-6 z-60 transition-all duration-500 ease-in-out ${hasScrolled ? "shadow-sm bg-background" : "shadow-none"}`}
       >
-        <Image src="/assets/brand-logo-outlined.png" alt="Logo" width={100} height={100} className="hidden md:block h-16 w-auto relative"/>
+        <Image src="/assets/brand-logo-outlined.png" alt="Logo" width={100} height={100} loading="eager" className="hidden md:block h-16 w-auto relative"/>
         
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                <Link href="/">
-                  Home
-                </Link>
+              <NavigationMenuLink render={<Link href="/" />} className={navigationMenuTriggerStyle()}>
+                Home
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -91,31 +90,23 @@ export default function Header() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                <Link href="/time-capsule">
-                  Time Capsule
-                </Link>
+              <NavigationMenuLink render={<Link href="/time-capsule" />} className={navigationMenuTriggerStyle()}>
+                Time Capsule
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                <Link href="/stardust">
-                  Stardust
-                </Link>
+              <NavigationMenuLink render={<Link href="/stardust" />} className={navigationMenuTriggerStyle()}>
+                Stardust
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem className="hidden">
-              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                <Link href="/">
-                  API
-                </Link>
+              <NavigationMenuLink render={<Link href="/" />} className={navigationMenuTriggerStyle()}>
+                API
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                <Link href="/faqs">
-                  FAQ's
-                </Link>
+              <NavigationMenuLink render={<Link href="/faqs" />} className={navigationMenuTriggerStyle()}>
+                FAQ's
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -133,12 +124,14 @@ export default function Header() {
           )}
         </div>
 
-        <Button variant="neutral" className="cursor-pointer" asChild>
-          <Link href="https://github.com/lugh-tuatha/astryss-frontend" target="_blank" >
-            2 Stars
-            <Github />
-          </Link>
-        </Button>
+        <Link
+          href="https://github.com/lugh-tuatha/astryss-frontend"
+          target="_blank"
+          className={buttonVariants({ variant: "neutral", className: "cursor-pointer" })}
+        >
+          2 Stars
+          <SiGithub aria-hidden />
+        </Link>
       </header>
 
       {isOpen && (
@@ -183,13 +176,14 @@ interface ListItemProps {
 function ListItem({ title, children, href }: ListItemProps) {
   return (
     <li>
-      <NavigationMenuLink asChild>
-        <Link href={href} className="block text-main-foreground select-none space-y-1 rounded-base border-2 border-transparent p-3 leading-none no-underline outline-hidden transition-colors hover:border-border">
-          <div className="text-base font-heading leading-none">{title}</div>
-          <p className="font-base line-clamp-2 text-sm leading-snug">
-            {children}
-          </p>
-        </Link>
+      <NavigationMenuLink
+        render={<Link href={href} />}
+        className="block text-main-foreground select-none space-y-1 rounded-base border-2 border-transparent p-3 leading-none no-underline outline-hidden transition-colors hover:border-border"
+      >
+        <div className="text-base font-heading leading-none">{title}</div>
+        <p className="font-base line-clamp-2 text-sm leading-snug">
+          {children}
+        </p>
       </NavigationMenuLink>
     </li>
   )

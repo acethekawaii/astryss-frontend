@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 
 import type { Emotion } from "@/shared/constants/emotions";
 import { usePrefersReducedMotion } from "@/shared/hooks/use-prefers-reduced-motion";
-import { cn } from "@/vendor/lib/utils";
+import { cn } from "@/lib/utils";
 
 import { MOOD_ATMOSPHERES } from "../constants/mood-atmospheres";
 import { sparklePath } from "../lib/sparkle-path";
@@ -15,7 +15,7 @@ const MINOR_STAR_PATH = sparklePath(2.4);
 /** A small constellation for the selected mood, tucked into the header's top-right corner. */
 export default function MoodConstellation({ emotion }: { emotion?: Emotion }) {
   return (
-    <div aria-hidden className="pointer-events-none absolute top-2 right-4 h-10 w-20">
+    <div aria-hidden className="pointer-events-none absolute top-1 right-3 h-8 w-16 sm:top-1.5 sm:right-4 sm:h-9 sm:w-[4.5rem]">
       <AnimatePresence initial={false}>
         {emotion && <Constellation key={emotion} emotion={emotion} />}
       </AnimatePresence>

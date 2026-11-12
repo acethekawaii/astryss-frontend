@@ -1,9 +1,9 @@
 import { memo } from "react";
 import Image from "next/image";
 
-import { cn } from "@/vendor/lib/utils";
-import { Badge } from "@/vendor/ui/badge";
-import { Card, CardContent, CardFooter } from "@/vendor/ui/card";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 import { Sparkles } from "lucide-react";
 import { formatDistanceToNow } from 'date-fns';

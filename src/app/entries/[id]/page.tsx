@@ -6,10 +6,10 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/vendor/ui/avatar";
-import { Card, CardContent, CardFooter, CardHeader } from "@/vendor/ui/card";
-import { Badge } from "@/vendor/ui/badge";
-import { Button } from "@/vendor/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 
 import { EMOTION_LABELS, EMOTION_STYLES } from "@/shared/constants/emotions";
 import { Variant, VARIANT_ICONS, VARIANT_STYLES } from "@/shared/constants/variants";
@@ -74,11 +74,12 @@ export default async function EntryPage(props: Props) {
   return (
     <main className="main-container pt-12 md:pt-20">
       <div className="md:w-2/3 mx-auto mt-8">
-        <Link href="/entries">
-          <Button variant="neutral" className="cursor-pointer">
-            <ArrowLeft />
-            Entries
-          </Button>
+        <Link
+          href="/entries"
+          className={buttonVariants({ variant: "neutral", className: "cursor-pointer" })}
+        >
+          <ArrowLeft />
+          Entries
         </Link>
 
         <Card className="mt-6 border-4">

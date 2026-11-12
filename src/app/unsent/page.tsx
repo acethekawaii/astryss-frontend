@@ -2,10 +2,10 @@ import { Metadata } from "next";
 
 import * as motion from "motion/react-client";
 
-import { Card } from "@/vendor/ui/card";
+import { Card } from "@/components/ui/card";
 import UnsentMessages from "./components/unsent-messages";
 import { FileWarning, PenLine } from "lucide-react";
-import { Button } from "@/vendor/ui/button";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: 'Unsent - astryss*',

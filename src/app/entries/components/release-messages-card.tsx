@@ -2,10 +2,10 @@ import Image from "next/image";
 import { memo } from "react";
 import { motion } from "motion/react"
 
-import { cn } from "@/vendor/lib/utils";
-import { Badge } from "@/vendor/ui/badge";
-import { Avatar, AvatarImage, AvatarFallback } from "@/vendor/ui/avatar";
-import { Card, CardContent, CardFooter, CardHeader } from "@/vendor/ui/card";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 
 import { Sparkles } from "lucide-react";
 

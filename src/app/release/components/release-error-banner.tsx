@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { RotateCcw, TriangleAlert } from "lucide-react";
 
 import { usePrefersReducedMotion } from "@/shared/hooks/use-prefers-reduced-motion";
-import { Button } from "@/vendor/ui/button";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   isVisible: boolean;
@@ -32,7 +32,7 @@ export default function ReleaseErrorBanner({ isVisible, onRetry }: Props) {
         >
           <div
             role="alert"
-            className="flex flex-col gap-3 border-t-4 bg-chart-3 px-6 py-4 sm:flex-row sm:items-center sm:justify-between"
+            className="flex flex-col gap-3 border-t-2 bg-chart-3 px-6 py-4 sm:flex-row sm:items-center sm:justify-between"
           >
             <p className="flex items-center gap-2 text-sm font-bold">
               <TriangleAlert aria-hidden className="size-4 shrink-0" />
